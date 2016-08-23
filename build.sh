@@ -1,6 +1,6 @@
 #!/bin/sh
-mkdir -p foo
+mkdir -p build
 cd build
-set -e
-ninja
+cmake ..
+make
 ./layout_test
