@@ -1,0 +1,5 @@
+# Enable C++ support
+language: cpp
+# Build steps
+script:
+  - ./build.sh
