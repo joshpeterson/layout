@@ -60,8 +60,10 @@ int main()
 {
   std::cout << "Here 1\n";
   CXIndex index        = clang_createIndex( 0, 1 );
+  std::cout << "Here 1.1\n";
   CXTranslationUnit tu = clang_parseTranslationUnit(index,
-      "/home/josh/test-cpp/test.cpp", NULL, 0, NULL, 0, CXTranslationUnit_None );
+      "/home/josh/layout/test.cpp", NULL, 0, NULL, 0, CXTranslationUnit_None );
+  std::cout << "Here 1.3\n";
   if( !tu )
   {
     std::cout << "Here 2\n";

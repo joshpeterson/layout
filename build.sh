@@ -1,6 +1,4 @@
 #!/bin/sh
-mkdir -p build
-cd build
-cmake ..
+set -e
 make
 ./layout_test

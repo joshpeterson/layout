@@ -1,2 +1,5 @@
 build/
 *.swp
+*.o
+layout
+layout_test

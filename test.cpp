@@ -1,5 +1,3 @@
-#include <string>
-
 struct Test
 {
     int first;
@@ -13,7 +11,6 @@ class Josh
     void Foo() {}
     
     int me;
-    std::string you;
     float three;
     Test four;
 };
