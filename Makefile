@@ -7,10 +7,19 @@ LAYOUT_OBJ = $(LAYOUT_SRC:.cpp=.o)
 TEST_SRC = $(wildcard test/*.cpp)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
-INCLUDES += -I/usr/lib/llvm-3.8/include
-CXXFLAGS += -Wall
 LDFLAGS += -L/usr/lib/llvm-3.8/lib
 LIBS += -lclang
+
+INCLUDES += -I/usr/lib/llvm-3.8/include
+CXXFLAGS += -Wall
+
+DEBUG ?= 1
+ifeq ($(DEBUG), 1)
+  CXXFLAGS += -g
+  LDFLAGS += -g
+else
+  CXXFLAGS += -O3
+endif
 
 CXX = clang++
 

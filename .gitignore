@@ -1,5 +1,6 @@
 build/
 *.swp
+*.swo
 *.o
 layout
 layout_test

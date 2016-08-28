@@ -1,4 +1,4 @@
 #!/bin/sh
 set -e
-make
+make DEBUG=1
 ./layout_test
