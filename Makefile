@@ -11,17 +11,18 @@ LDFLAGS += -L/usr/lib/llvm-3.8/lib
 LIBS += -lclang
 
 INCLUDES += -I/usr/lib/llvm-3.8/include
-CXXFLAGS += -Wall
+CXXFLAGS += -Wall -fno-rtti
 
 DEBUG ?= 1
 ifeq ($(DEBUG), 1)
   CXXFLAGS += -g
   LDFLAGS += -g
 else
-  CXXFLAGS += -O3
+  CXXFLAGS += -O3 -flto
+  LDFLAGS += -flto
 endif
 
-CXX = clang++
+CXX = g++
 
 .SUFFIXES: .cpp
 
