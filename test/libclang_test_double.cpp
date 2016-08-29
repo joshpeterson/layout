@@ -9,13 +9,14 @@ bool disposeTranslationUnitCalled = false;
 bool disposeIndexCalled = false;
 clangTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
-clangIndex createIndex()
+clangIndex createIndexDouble()
 {
   createIndexCalled = true;
   return expectedIndex;
 }
 
-clangTranslationUnit parseTranslationUnit(clangIndex index, const char* fileName)
+clangTranslationUnit parseTranslationUnitDouble(clangIndex index,
+                                                const char* fileName)
 {
   parseTranslationUnitCalled = true;
   indexPassedToParseTranslationUnit = index;
@@ -23,13 +24,13 @@ clangTranslationUnit parseTranslationUnit(clangIndex index, const char* fileName
   return expectedTranslationUnit;
 }
 
-void disposeTranslationUnit(clangTranslationUnit translationUnit)
+void disposeTranslationUnitDouble(clangTranslationUnit translationUnit)
 {
   disposeTranslationUnitCalled = true;
   translationUnitPassedToDisposeTranslationUnit = translationUnit;
 }
 
-void disposeIndex(clangIndex index)
+void disposeIndexDouble(clangIndex index)
 {
   disposeIndexCalled = true;
 }

@@ -11,11 +11,11 @@ LDFLAGS += -L/usr/lib/llvm-3.8/lib
 LIBS += -lclang
 
 INCLUDES += -I/usr/lib/llvm-3.8/include
-CXXFLAGS += -Wall -fno-rtti
+CXXFLAGS += -Wall -fno-rtti -std=c++14
 
 DEBUG ?= 1
 ifeq ($(DEBUG), 1)
-  CXXFLAGS += -g
+  CXXFLAGS += -g -DDEBUG -DENABLE_FAKING
   LDFLAGS += -g
 else
   CXXFLAGS += -O3 -flto

@@ -2,6 +2,8 @@
 #include "../include/translation_unit.hpp"
 #include "libclang_test_double.hpp"
 
+#if ENABLE_FAKING
+
 extern bool createIndexCalled;
 extern bool parseTranslationUnitCalled;
 extern clangIndex indexPassedToParseTranslationUnit;
@@ -12,6 +14,11 @@ extern clangTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
 TEST_CASE("Translation Unit")
 {
+  FAKE(createIndex, createIndexDouble);
+  FAKE(parseTranslationUnit, parseTranslationUnitDouble);
+  FAKE(disposeTranslationUnit, disposeTranslationUnitDouble);
+  FAKE(disposeIndex, disposeIndexDouble);
+
   SECTION("Creating a TranslationUnit calls createIndex")
   {
     TranslationUnit test("");
@@ -62,3 +69,6 @@ TEST_CASE("Translation Unit")
     REQUIRE(disposeIndexCalled == true);
   }
 }
+
+#endif // ENABLE_FAKING
+
