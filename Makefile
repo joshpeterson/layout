@@ -11,7 +11,7 @@ LDFLAGS += -L/usr/lib/llvm-3.8/lib
 LIBS += -lclang
 
 INCLUDES += -I/usr/lib/llvm-3.8/include
-CXXFLAGS += -Wall -fno-rtti -std=c++11
+CXXFLAGS += -Wall -fno-rtti -std=c++14
 
 DEBUG ?= 1
 ifeq ($(DEBUG), 1)
