@@ -1,5 +1,21 @@
 # Enable C++ support
 language: cpp
+sudo: required
+dist: precise
+language: cpp
+
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+    before_install:
+      - sudo apt-get update -qq
 # Build steps
 script:
   - ./build.sh

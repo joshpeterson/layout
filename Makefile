@@ -22,8 +22,6 @@ else
   LDFLAGS += -flto
 endif
 
-CXX = g++
-
 .SUFFIXES: .cpp
 
 all: layout test
