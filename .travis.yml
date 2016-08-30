@@ -1,5 +1,4 @@
 # Enable C++ support
-language: cpp
 sudo: required
 dist: precise
 language: cpp
@@ -14,8 +13,10 @@ matrix:
           packages:
             - g++-5
       env: COMPILER=g++-5
-    before_install:
-      - sudo apt-get update -qq
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libopencv-dev
 # Build steps
 script:
   - ./build.sh
