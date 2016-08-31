@@ -1,11 +1,11 @@
 #pragma once
 
-const clangIndex expectedIndex = reinterpret_cast<clangIndex>(1);
-const clangTranslationUnit expectedTranslationUnit =
-        reinterpret_cast<clangTranslationUnit>(1);
+const CXIndex expectedIndex = reinterpret_cast<CXIndex>(1);
+const CXTranslationUnit expectedTranslationUnit =
+        reinterpret_cast<CXTranslationUnit>(1);
 
-clangIndex createIndexDouble();
-clangTranslationUnit parseTranslationUnitDouble(clangIndex index,
+CXIndex createIndexDouble();
+CXTranslationUnit parseTranslationUnitDouble(CXIndex index,
                                                 const char* fileName);
-void disposeTranslationUnitDouble(clangTranslationUnit translationUnit);
-void disposeIndexDouble(clangIndex index);
+void disposeTranslationUnitDouble(CXTranslationUnit translationUnit);
+void disposeIndexDouble(CXIndex index);

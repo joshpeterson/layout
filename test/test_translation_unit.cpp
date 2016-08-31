@@ -6,11 +6,11 @@
 
 extern bool createIndexCalled;
 extern bool parseTranslationUnitCalled;
-extern clangIndex indexPassedToParseTranslationUnit;
+extern CXIndex indexPassedToParseTranslationUnit;
 extern const char* fileNamePassedToParseTranslationUnit;
 extern bool disposeTranslationUnitCalled;
 extern bool disposeIndexCalled;
-extern clangTranslationUnit translationUnitPassedToDisposeTranslationUnit;
+extern CXTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
 TEST_CASE("Translation Unit")
 {

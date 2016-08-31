@@ -8,6 +8,6 @@ public:
   ~TranslationUnit();
 
 private:
-  clangIndex index_;
-  clangTranslationUnit translationUnit_;
+  CXIndex index_;
+  CXTranslationUnit translationUnit_;
 };

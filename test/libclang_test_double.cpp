@@ -3,19 +3,19 @@
 
 bool createIndexCalled = false;
 bool parseTranslationUnitCalled = false;
-clangIndex indexPassedToParseTranslationUnit;
+CXIndex indexPassedToParseTranslationUnit;
 const char* fileNamePassedToParseTranslationUnit;
 bool disposeTranslationUnitCalled = false;
 bool disposeIndexCalled = false;
-clangTranslationUnit translationUnitPassedToDisposeTranslationUnit;
+CXTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
-clangIndex createIndexDouble()
+CXIndex createIndexDouble()
 {
   createIndexCalled = true;
   return expectedIndex;
 }
 
-clangTranslationUnit parseTranslationUnitDouble(clangIndex index,
+CXTranslationUnit parseTranslationUnitDouble(CXIndex index,
                                                 const char* fileName)
 {
   parseTranslationUnitCalled = true;
@@ -24,13 +24,13 @@ clangTranslationUnit parseTranslationUnitDouble(clangIndex index,
   return expectedTranslationUnit;
 }
 
-void disposeTranslationUnitDouble(clangTranslationUnit translationUnit)
+void disposeTranslationUnitDouble(CXTranslationUnit translationUnit)
 {
   disposeTranslationUnitCalled = true;
   translationUnitPassedToDisposeTranslationUnit = translationUnit;
 }
 
-void disposeIndexDouble(clangIndex index)
+void disposeIndexDouble(CXIndex index)
 {
   disposeIndexCalled = true;
 }
