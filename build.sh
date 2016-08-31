@@ -1,9 +1,7 @@
 #!/bin/sh
 set -e
-if [ -n "$COMPILER" ]
-then
-  make DEBUG=1 CXX=$COMPILER
-else
-  make DEBUG=1
-fi
-./layout_test
+echo Building in debug
+./debug.sh
+make clean
+echo Building in release
+./release.sh
