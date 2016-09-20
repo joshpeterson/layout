@@ -2,7 +2,7 @@
 #include "temp_source_file.hpp"
 #include "../include/type_inspector.hpp"
 
-const char* test_filename = "source_file_for_tests";
+const char* test_filename = "source_file_for_tests.h";
 
 TEST_CASE("Type Inspector")
 {

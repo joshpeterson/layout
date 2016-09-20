@@ -11,3 +11,8 @@ TranslationUnit::~TranslationUnit()
   disposeTranslationUnit(translationUnit_);
   disposeIndex(index_);
 }
+
+CXTranslationUnit TranslationUnit::cxTranslationUnit() const
+{
+  return translationUnit_;
+}
