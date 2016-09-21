@@ -1,4 +1,5 @@
 #include "../include/libclang.hpp"
+#include "../include/clang_string.hpp"
 
 DEFINE_FAKE(createIndex)
 DEFINE_FAKE(parseTranslationUnit)
@@ -29,3 +30,16 @@ void disposeIndex(CXIndex index)
   CALL_FAKE(disposeIndex, (index))
   clang_disposeIndex(index);
 }
+
+std::string getCursorSpelling(CXCursor cursor)
+{
+  ClangString cursorSpelling(clang_getCursorSpelling(cursor));
+  return cursorSpelling.str();
+}
+
+std::string getTypeSpelling(CXType type)
+{
+  ClangString typeSpelling(clang_getTypeSpelling(type));
+  return typeSpelling.str();
+}
+
