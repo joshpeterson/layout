@@ -1,6 +1,6 @@
 # Enable C++ support
 sudo: required
-dist: precise
+dist: trusty
 language: cpp
 
 matrix:
