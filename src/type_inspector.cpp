@@ -2,27 +2,56 @@
 #include "../include/translation_unit.hpp"
 #include "../include/libclang.hpp"
 
-CXChildVisitResult visitor(CXCursor cursor, CXCursor /* parent */,
-                            CXClientData clientData)
+std::string getCursorSpelling (CXCursor cursor)
 {
-  CXSourceLocation location = clang_getCursorLocation(cursor);
-  if(clang_Location_isFromMainFile(location) == 0)
-    return CXChildVisit_Continue;
+  auto cursorSpelling = clang_getCursorSpelling(cursor);
+  std::string result = clang_getCString(cursorSpelling);
 
-  CXCursorKind cursorKind = clang_getCursorKind(cursor);
+  clang_disposeString(cursorSpelling);
+  return result;
+}
 
-  auto types = reinterpret_cast<std::vector<TypeInfo>*>(clientData);
-  if (cursorKind == CXCursor_StructDecl)
+CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
+                                  CXClientData clientData)
+{
+  if (clang_getCursorKind(cursor) == CXCursor_FieldDecl)
   {
-    TypeInfo typeInfo;
     auto type = clang_getCursorType(cursor);
     auto typeSpelling = clang_getTypeSpelling(type);
-    typeInfo.name = clang_getCString(typeSpelling);
 
-    types->push_back(typeInfo);
+    FieldInfo fieldInfo;
+    fieldInfo.type = clang_getCString(typeSpelling);
+    fieldInfo.name = getCursorSpelling(cursor);
+    auto typeInfo = reinterpret_cast<TypeInfo*>(clientData);
+
+    typeInfo->fields.push_back(fieldInfo);
+
+    clang_disposeString(typeSpelling);
   }
 
-  clang_visitChildren(cursor, visitor, types);
+  return CXChildVisit_Continue;
+}
+
+CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
+                                CXClientData clientData)
+{
+  if (clang_getCursorKind(cursor) == CXCursor_StructDecl)
+  {
+    auto type = clang_getCursorType(cursor);
+    auto typeSpelling = clang_getTypeSpelling(type);
+
+    TypeInfo typeInfo;
+    typeInfo.name = clang_getCString(typeSpelling);
+
+    clang_visitChildren(cursor, field_visitor, &typeInfo);
+
+    auto types = reinterpret_cast<std::vector<TypeInfo>*>(clientData);
+    types->push_back(typeInfo);
+
+    clang_disposeString(typeSpelling);
+  }
+
+  clang_visitChildren(cursor, type_visitor, clientData);
 
   return CXChildVisit_Continue;
 }
@@ -33,7 +62,7 @@ std::vector<TypeInfo> GatherTypes(const char* filename)
   auto rootCursor = clang_getTranslationUnitCursor(tu.cxTranslationUnit());
 
   std::vector<TypeInfo> types;
-  clang_visitChildren(rootCursor, visitor, &types);
+  clang_visitChildren(rootCursor, type_visitor, &types);
 
   return types;
 }
