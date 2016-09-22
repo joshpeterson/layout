@@ -10,7 +10,7 @@ TEST_CASE("Output String")
     TypeInfo typeInfo { "Test" };
     std::vector<TypeInfo> types { typeInfo };
     auto lines = CodeForStrings(types);
-    REQUIRE(lines[0] == "printf(\"Size of Test: %d\\n\", sizeof(Test));");
+    REQUIRE(lines[0] == "printf(\"Size of Test: %d\\n\", (int)sizeof(Test));");
   }
 
   SECTION("Second entry is name, size, and offset of first field")
@@ -19,7 +19,7 @@ TEST_CASE("Output String")
     TypeInfo typeInfo { "Test", std::vector<FieldInfo> { fieldInfo } };
     std::vector<TypeInfo> types { typeInfo };
     auto lines = CodeForStrings(types);
-    REQUIRE(lines[1] == "printf(\"field1 - size: %d offset: %d\\n\", sizeof(int),"
-                        " offsetof(Test, field1));");
+    REQUIRE(lines[1] == "printf(\"field1 - type: int offset: %d size: %d\\n\","
+                        " (int)offsetof(Test, field1), (int)sizeof(int));");
   }
 }
