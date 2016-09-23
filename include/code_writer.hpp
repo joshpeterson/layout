@@ -6,6 +6,7 @@ class CodeWriter
   public:
     CodeWriter(std::ostream& out);
     void WriteIncludes();
+    void WriteLine();
     void WriteLine(const std::string& code);
     void WriteLineIndented(const std::string& code);
     void WriteMainStart();

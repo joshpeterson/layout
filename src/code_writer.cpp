@@ -10,6 +10,11 @@ void CodeWriter::WriteIncludes()
   out_ << "#include <cstddef>\n";
 }
 
+void CodeWriter::WriteLine()
+{
+  WriteLine(std::string());
+}
+
 void CodeWriter::WriteLine(const std::string& code)
 {
   out_ << code << "\n";
@@ -17,9 +22,8 @@ void CodeWriter::WriteLine(const std::string& code)
 
 void CodeWriter::WriteLineIndented(const std::string& code)
 {
-  out_ << "\t" << code << "\n";
+  WriteLine("\t" + code);
 }
-
 
 void CodeWriter::WriteMainStart()
 {

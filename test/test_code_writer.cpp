@@ -28,6 +28,12 @@ TEST_CASE("Code Writer")
     REQUIRE(code.str() == "\t" + expected + "\n");
   }
 
+  SECTION("Can write blank line")
+  {
+    writer.WriteLine();
+    REQUIRE(code.str() == "\n");
+  }
+
   SECTION("Can write main start")
   {
     writer.WriteMainStart();
