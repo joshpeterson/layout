@@ -2,5 +2,5 @@
 
 int main(int argc, const char* argv[])
 {
-  return ComputeLayout("test.cpp");
+  return ComputeLayout(argv[1]);
 }
