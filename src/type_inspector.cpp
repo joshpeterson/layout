@@ -20,7 +20,8 @@ CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
 CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
                                 CXClientData clientData)
 {
-  if (clang_getCursorKind(cursor) == CXCursor_StructDecl)
+  auto cursorKind = clang_getCursorKind(cursor);
+  if (cursorKind == CXCursor_StructDecl || cursorKind == CXCursor_ClassDecl)
   {
     auto type = clang_getCursorType(cursor);
     TypeInfo typeInfo { getTypeSpelling(type) };

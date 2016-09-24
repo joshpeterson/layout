@@ -4,10 +4,18 @@
 
 TEST_CASE("Type Inspector")
 {
-  const char* test_filename = "source_file_for_tests.h";
+  const char* test_filename = "source_file_for_tests.hh";
   SECTION("Can parse one type with no fields from a source file")
   {
     const char* source = "struct Test{};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types.size() == 1);
+  }
+
+  SECTION("Can parse one class with no fields from a source file")
+  {
+    const char* source = "class Test{};";
     TempSourceFile testFile(test_filename, source);
     auto types = GatherTypes(test_filename);
     REQUIRE(types.size() == 1);
@@ -26,7 +34,7 @@ TEST_CASE("Type Inspector")
     const char* source = "struct Test{};";
     TempSourceFile testFile(test_filename, source);
     auto types = GatherTypes(test_filename);
-    REQUIRE(types[0].name == "struct Test");
+    REQUIRE(types[0].name == "Test");
   }
 
   SECTION("Can parse one type with one field from a source file")
