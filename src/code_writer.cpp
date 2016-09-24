@@ -6,8 +6,8 @@ CodeWriter::CodeWriter(std::ostream& out) : out_(out)
 
 void CodeWriter::WriteIncludes()
 {
-  out_ << "#include <cstdio>\n";
-  out_ << "#include <cstddef>\n";
+  out_ << "#include <stdio.h>\n";
+  out_ << "#include <stddef.h>\n";
 }
 
 void CodeWriter::WriteLine()

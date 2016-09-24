@@ -11,7 +11,7 @@ TEST_CASE("Code Writer")
   SECTION("Can write includes")
   {
     writer.WriteIncludes();
-    REQUIRE(code.str() == "#include <cstdio>\n#include <cstddef>\n");
+    REQUIRE(code.str() == "#include <stdio.h>\n#include <stddef.h>\n");
   }
 
   SECTION("Can write line")
