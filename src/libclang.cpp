@@ -42,4 +42,3 @@ std::string getTypeSpelling(CXType type)
   ClangString typeSpelling(clang_getTypeSpelling(type));
   return typeSpelling.str();
 }
-

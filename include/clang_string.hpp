@@ -4,12 +4,12 @@
 
 class ClangString
 {
-  public:
-    explicit ClangString(CXString value);
-    ~ClangString();
+public:
+  explicit ClangString(CXString value);
+  ~ClangString();
 
-    std::string str() const;
+  std::string str() const;
 
-  private:
-    CXString value_;
+private:
+  CXString value_;
 };

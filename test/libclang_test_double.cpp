@@ -15,8 +15,7 @@ CXIndex createIndexDouble()
   return expectedIndex;
 }
 
-CXTranslationUnit parseTranslationUnitDouble(CXIndex index,
-                                                const char* fileName)
+CXTranslationUnit parseTranslationUnitDouble(CXIndex index, const char* fileName)
 {
   parseTranslationUnitCalled = true;
   indexPassedToParseTranslationUnit = index;
@@ -30,7 +29,4 @@ void disposeTranslationUnitDouble(CXTranslationUnit translationUnit)
   translationUnitPassedToDisposeTranslationUnit = translationUnit;
 }
 
-void disposeIndexDouble(CXIndex index)
-{
-  disposeIndexCalled = true;
-}
+void disposeIndexDouble(CXIndex index) { disposeIndexCalled = true; }

@@ -1,8 +1,6 @@
 #include "../include/code_writer.hpp"
 
-CodeWriter::CodeWriter(std::ostream& out) : out_(out)
-{
-}
+CodeWriter::CodeWriter(std::ostream& out) : out_(out) {}
 
 void CodeWriter::WriteIncludes()
 {
@@ -10,15 +8,9 @@ void CodeWriter::WriteIncludes()
   out_ << "#include <stddef.h>\n";
 }
 
-void CodeWriter::WriteLine()
-{
-  WriteLine(std::string());
-}
+void CodeWriter::WriteLine() { WriteLine(std::string()); }
 
-void CodeWriter::WriteLine(const std::string& code)
-{
-  out_ << code << "\n";
-}
+void CodeWriter::WriteLine(const std::string& code) { out_ << code << "\n"; }
 
 void CodeWriter::WriteLineIndented(const std::string& code)
 {

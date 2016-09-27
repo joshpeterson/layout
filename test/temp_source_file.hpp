@@ -11,10 +11,7 @@ public:
     fclose(tempFile);
   }
 
-  ~TempSourceFile()
-  {
-    std::remove(filename_);
-  }
+  ~TempSourceFile() { std::remove(filename_); }
 
 private:
   const char* filename_;

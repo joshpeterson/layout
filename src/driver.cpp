@@ -1,8 +1,8 @@
 #include "../include/driver.hpp"
-#include "../include/type_inspector.hpp"
-#include "../include/output_string.hpp"
 #include "../include/code_writer.hpp"
 #include "../include/load_file.hpp"
+#include "../include/output_string.hpp"
+#include "../include/type_inspector.hpp"
 #include <iostream>
 
 int ComputeLayout(const char* filename)

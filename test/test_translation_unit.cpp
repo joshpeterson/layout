@@ -1,5 +1,5 @@
-#include "catch.hpp"
 #include "../include/translation_unit.hpp"
+#include "catch.hpp"
 #include "libclang_test_double.hpp"
 
 #if ENABLE_FAKING
@@ -71,4 +71,3 @@ TEST_CASE("Translation Unit")
 }
 
 #endif // ENABLE_FAKING
-

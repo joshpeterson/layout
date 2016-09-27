@@ -1,7 +1,6 @@
+#include "../include/load_file.hpp"
 #include "catch.hpp"
 #include "temp_source_file.hpp"
-#include "../include/load_file.hpp"
-
 
 TEST_CASE("Load File")
 {

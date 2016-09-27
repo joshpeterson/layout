@@ -1,6 +1,6 @@
+#include "../include/type_inspector.hpp"
 #include "catch.hpp"
 #include "temp_source_file.hpp"
-#include "../include/type_inspector.hpp"
 
 TEST_CASE("Type Inspector")
 {

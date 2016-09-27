@@ -1,7 +1,7 @@
-#include "catch.hpp"
 #include "../include/code_writer.hpp"
-#include <string>
+#include "catch.hpp"
 #include <sstream>
+#include <string>
 
 TEST_CASE("Code Writer")
 {

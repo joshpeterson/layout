@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
 #include "type_info.hpp"
+#include <vector>
 
 std::vector<TypeInfo> GatherTypes(const char* filename);
