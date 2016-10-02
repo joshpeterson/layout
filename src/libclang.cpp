@@ -15,14 +15,14 @@ CXIndex createIndex()
 CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName)
 {
   CALL_FAKE(parseTranslationUnit, (index, fileName))
-  return clang_parseTranslationUnit(index, fileName, NULL, 0, NULL, 0,
+  return clang_parseTranslationUnit(index, fileName, nullptr, 0, nullptr, 0,
                                     CXTranslationUnit_None);
 }
 
 void disposeTranslationUnit(CXTranslationUnit translationUnit)
 {
   CALL_FAKE(disposeTranslationUnit, (translationUnit))
-  clang_disposeTranslationUnit((CXTranslationUnit)translationUnit);
+  clang_disposeTranslationUnit(translationUnit);
 }
 
 void disposeIndex(CXIndex index)

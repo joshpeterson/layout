@@ -5,7 +5,7 @@
 
 FAKEABLE(CXIndex, createIndex, ())
 FAKEABLE(CXTranslationUnit, parseTranslationUnit,
-         (CXIndex index, const char* filename))
+         (CXIndex index, const char* fileName))
 FAKEABLE(void, disposeTranslationUnit, (CXTranslationUnit translationUnit))
 FAKEABLE(void, disposeIndex, (CXIndex index))
 

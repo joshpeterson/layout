@@ -29,4 +29,4 @@ void disposeTranslationUnitDouble(CXTranslationUnit translationUnit)
   translationUnitPassedToDisposeTranslationUnit = translationUnit;
 }
 
-void disposeIndexDouble(CXIndex index) { disposeIndexCalled = true; }
+void disposeIndexDouble(CXIndex /* index */) { disposeIndexCalled = true; }
