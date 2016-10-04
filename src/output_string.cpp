@@ -7,14 +7,14 @@ std::vector<std::string> CodeForStrings(const std::vector<TypeInfo>& types)
   for (auto type : types)
   {
     std::stringstream line;
-    line << "printf(\"Size of " << type.name << ": %d\\n\", (int)sizeof("
+    line << "printf(\"" << type.name << " - size: %d bytes\\n\", (int)sizeof("
          << type.name << "));";
     code.push_back(line.str());
 
     for (auto field : type.fields)
     {
       std::stringstream line;
-      line << "printf(\"" << field.name << " - type: " << field.type
+      line << "printf(\"* " << field.name << " - type: " << field.type
            << " offset: %d size: %d\\n\", (int)offsetof(" << type.name << ", "
            << field.name << "), (int)sizeof(" << field.type << "));";
       code.push_back(line.str());
