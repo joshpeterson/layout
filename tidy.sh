@@ -1,7 +1,9 @@
 #!/bin/sh
 if [ $# -eq 0 ] ; then
-  #FILES="src/*.cpp test/*.cpp"
   FILES=`git diff  --name-only --diff-filter=AMR '*.cpp' | xargs`
+  if [ -z "$VAR" ]; then
+    FILES="src/*.cpp test/*.cpp"
+  fi
 else
   FILES="$1"
 fi
