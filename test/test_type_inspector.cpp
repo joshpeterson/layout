@@ -37,12 +37,28 @@ TEST_CASE("Type Inspector")
     REQUIRE(types[0].name == "Test");
   }
 
+  SECTION("Can parse the size of one type with no fields from a source file")
+  {
+    const char* source = "struct Test{};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].size == 1);
+  }
+
   SECTION("Can parse one type with one field from a source file")
   {
     const char* source = "struct Test{int field1;};";
     TempSourceFile testFile(test_filename, source);
     auto types = GatherTypes(test_filename);
     REQUIRE(types[0].fields.size() == 1);
+  }
+
+  SECTION("Can parse the size of a type with one field from a source file")
+  {
+    const char* source = "struct Test{int field1;};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].size == 4);
   }
 
   SECTION("Can parse the type of one field from a source file")

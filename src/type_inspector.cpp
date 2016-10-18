@@ -24,7 +24,8 @@ CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
   if (cursorKind == CXCursor_StructDecl || cursorKind == CXCursor_ClassDecl)
   {
     auto type = clang_getCursorType(cursor);
-    TypeInfo typeInfo{getTypeSpelling(type)};
+    auto size = clang_Type_getSizeOf(type);
+    TypeInfo typeInfo{getTypeSpelling(type), size};
 
     clang_visitChildren(cursor, field_visitor, &typeInfo);
 

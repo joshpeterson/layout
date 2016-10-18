@@ -6,5 +6,6 @@
 struct TypeInfo
 {
   std::string name;
+  long long size;
   std::vector<FieldInfo> fields;
 };

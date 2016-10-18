@@ -17,7 +17,7 @@ TEST_CASE("Output String")
   SECTION("Second entry is name, size, and offset of first field")
   {
     FieldInfo fieldInfo{"int", "field1"};
-    TypeInfo typeInfo{"Test", std::vector<FieldInfo>{fieldInfo}};
+    TypeInfo typeInfo{"Test", 0, std::vector<FieldInfo>{fieldInfo}};
     std::vector<TypeInfo> types{typeInfo};
     auto lines = CodeForStrings(types);
     REQUIRE(lines[1] == "printf(\"* field1 - type: int offset: %d size: %d\\n\","
