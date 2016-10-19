@@ -8,7 +8,10 @@ CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
   if (clang_getCursorKind(cursor) == CXCursor_FieldDecl)
   {
     auto type = clang_getCursorType(cursor);
-    FieldInfo fieldInfo{getTypeSpelling(type), getCursorSpelling(cursor)};
+    auto size = clang_Type_getSizeOf(type);
+    auto offset = getOffsetOfFieldInBytes(cursor);
+    FieldInfo fieldInfo{getTypeSpelling(type), getCursorSpelling(cursor), size,
+                        offset};
 
     auto typeInfo = reinterpret_cast<TypeInfo*>(clientData);
     typeInfo->fields.push_back(fieldInfo);

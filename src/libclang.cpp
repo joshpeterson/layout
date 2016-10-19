@@ -42,3 +42,9 @@ std::string getTypeSpelling(CXType type)
   ClangString typeSpelling(clang_getTypeSpelling(type));
   return typeSpelling.str();
 }
+
+int64_t getOffsetOfFieldInBytes(CXCursor cursor)
+{
+  // This call finds the offset in bits.
+  return clang_Cursor_getOffsetOfField(cursor) / 8;
+}

@@ -1,6 +1,7 @@
 #pragma once
 #include "faking.hpp"
 #include <clang-c/Index.h>
+#include <cstddef>
 #include <string>
 
 FAKEABLE(CXIndex, createIndex, ())
@@ -11,3 +12,4 @@ FAKEABLE(void, disposeIndex, (CXIndex index))
 
 std::string getCursorSpelling(CXCursor cursor);
 std::string getTypeSpelling(CXType type);
+int64_t getOffsetOfFieldInBytes(CXCursor cursor);

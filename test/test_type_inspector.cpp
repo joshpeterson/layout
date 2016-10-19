@@ -77,6 +77,22 @@ TEST_CASE("Type Inspector")
     REQUIRE(types[0].fields[0].name == "field1");
   }
 
+  SECTION("Can parse the size of one field from a source file")
+  {
+    const char* source = "struct Test{int field1;};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[0].size == 4);
+  }
+
+  SECTION("Can parse the size of one field from a source file")
+  {
+    const char* source = "struct Test{int field1;};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[0].offset == 0);
+  }
+
   SECTION("Can parse the type of a second field from a source file")
   {
     const char* source = "struct Test{int field1; double field2;};";
@@ -91,5 +107,21 @@ TEST_CASE("Type Inspector")
     TempSourceFile testFile(test_filename, source);
     auto types = GatherTypes(test_filename);
     REQUIRE(types[0].fields[1].name == "field2");
+  }
+
+  SECTION("Can parse the size of a second field from a source file")
+  {
+    const char* source = "struct Test{int field1; double field2;};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[1].size == 8);
+  }
+
+  SECTION("Can parse the offset of a second field from a source file")
+  {
+    const char* source = "struct Test{int field1; double field2;};";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[1].offset == 8);
   }
 }
