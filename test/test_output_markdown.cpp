@@ -7,9 +7,10 @@ TEST_CASE("Output Markdown")
 {
   SECTION("Empty type outputs table header and type size")
   {
-    const char* expected = "Test (0)||||\n"
+    const char* expected = "Test (0B)||||\n"
                            "---|:---:|:---:|:---:\n"
-                           "**Name**|**Type**|**Offset**|**Size**\n";
+                           "**Name**|**Type**|**Offset**|**Size**\n"
+                           "\n";
     TypeInfo typeInfo{"Test"};
     std::vector<TypeInfo> types{typeInfo};
     auto markdown = MarkdownFor(types);
@@ -18,15 +19,31 @@ TEST_CASE("Output Markdown")
 
   SECTION("Verify table for a type with twp fields")
   {
-    const char* expected = "Test (16)||||\n"
+    const char* expected = "Test (16B)||||\n"
                            "---|:---:|:---:|:---:\n"
                            "**Name**|**Type**|**Offset**|**Size**\n"
-                           "one|int|0|4\n"
-                           "two|double|8|8\n";
+                           "one|int|0B|4B\n"
+                           "two|double|8B|8B\n"
+                           "\n";
     std::vector<FieldInfo> fields = {{"int", "one", 4, 0},
                                      {"double", "two", 8, 8}};
     TypeInfo typeInfo{"Test", 16, fields};
     std::vector<TypeInfo> types{typeInfo};
+    auto markdown = MarkdownFor(types);
+    REQUIRE(markdown == expected);
+  }
+
+  SECTION("Outputs a newline between types.")
+  {
+    const char* expected = "Test1 (0B)||||\n"
+                           "---|:---:|:---:|:---:\n"
+                           "**Name**|**Type**|**Offset**|**Size**\n"
+                           "\n"
+                           "Test2 (0B)||||\n"
+                           "---|:---:|:---:|:---:\n"
+                           "**Name**|**Type**|**Offset**|**Size**\n"
+                           "\n";
+    std::vector<TypeInfo> types{{"Test1"}, {"Test2"}};
     auto markdown = MarkdownFor(types);
     REQUIRE(markdown == expected);
   }

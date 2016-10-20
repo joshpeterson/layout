@@ -10,10 +10,11 @@ std::string MarkdownFor(const std::vector<TypeInfo>& types)
   std::stringstream output;
   for (auto type : types)
   {
-    output << type.name << " (" << type.size << ")" << header;
+    output << type.name << " (" << type.size << "B)" << header;
     for (auto field : type.fields)
-      output << field.name << "|" << field.type << "|" << field.offset << "|"
-             << field.size << "\n";
+      output << field.name << "|" << field.type << "|" << field.offset << "B|"
+             << field.size << "B\n";
+    output << "\n";
   }
 
   return output.str();
