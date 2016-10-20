@@ -1,6 +1,7 @@
 #include "../include/driver.hpp"
 #include "../include/code_writer.hpp"
 #include "../include/load_file.hpp"
+#include "../include/output_markdown.hpp"
 #include "../include/output_string.hpp"
 #include "../include/type_inspector.hpp"
 #include <iostream>
@@ -8,17 +9,15 @@
 int ComputeLayout(const char* filename)
 {
   auto types = GatherTypes(filename);
-  CodeWriter writer(std::cout);
+  std::cout << MarkdownFor(types);
 
-  writer.WriteIncludes();
-  writer.WriteLine();
-  writer.WriteLine(LoadFile(filename));
-  writer.WriteMainStart();
+  std::cout << "Use this snippet with your compiler:\n";
+  std::cout << "```\n";
 
   for (auto line : CodeForStrings(types))
-    writer.WriteLineIndented(line);
+    std::cout << line << "\n";
 
-  writer.WriteMainEnd();
+  std::cout << "```\n";
 
   return 0;
 }
