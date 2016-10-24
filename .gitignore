@@ -1,4 +1,5 @@
 build/
+scratch/
 *.swp
 *.swo
 *.o
