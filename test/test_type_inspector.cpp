@@ -124,4 +124,32 @@ TEST_CASE("Type Inspector")
     auto types = GatherTypes(test_filename);
     REQUIRE(types[0].fields[1].offset == 8);
   }
+
+  SECTION("Can parse type using a standard library type")
+  {
+    const char* source = "#include <string>\n"
+                         "struct Test{std::string field;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[0].name == "field");
+  }
+
+  SECTION("Can parse the size of a field using a standard library type")
+  {
+    const char* source = "#include <string>\n"
+                         "struct Test{std::string field;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[0].size == 8);
+  }
+
+  SECTION("Can parse the offset of a field using a standard library type")
+  {
+    const char* source = "#include <string>\n"
+                         "struct Test{std::string field;};\n"
+                         "int field2;\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[1].offset == 8);
+  }
 }

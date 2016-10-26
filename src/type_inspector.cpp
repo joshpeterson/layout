@@ -23,6 +23,9 @@ CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
 CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
                                 CXClientData clientData)
 {
+  if (clang_Location_isFromMainFile(clang_getCursorLocation(cursor)) == 0)
+    return CXChildVisit_Continue;
+
   auto cursorKind = clang_getCursorKind(cursor);
   if (cursorKind == CXCursor_StructDecl || cursorKind == CXCursor_ClassDecl)
   {
