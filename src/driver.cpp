@@ -15,7 +15,9 @@ int ComputeLayout(const char* filename)
   std::cout << "```\n";
 
   for (auto line : CodeForStrings(types))
+  {
     std::cout << line << "\n";
+  }
 
   std::cout << "```\n";
 
