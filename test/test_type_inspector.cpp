@@ -146,8 +146,8 @@ TEST_CASE("Type Inspector")
   SECTION("Can parse the offset of a field using a standard library type")
   {
     const char* source = "#include <string>\n"
-                         "struct Test{std::string field;};\n"
-                         "int field2;\n";
+                         "struct Test{std::string field;\n"
+                         "int field2;};\n";
     TempSourceFile testFile(test_filename, source);
     auto types = GatherTypes(test_filename);
     REQUIRE(types[0].fields[1].offset == 8);
