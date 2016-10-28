@@ -152,4 +152,36 @@ TEST_CASE("Type Inspector")
     auto types = GatherTypes(test_filename);
     REQUIRE(types[0].fields[1].offset == 8);
   }
+
+  SECTION("Can parse the size of a field in a bit field")
+  {
+    const char* source = "struct Test{int a:16; int b:17;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[1].size == 4);
+  }
+
+  SECTION("Can parse the offset of a field in a bitfield")
+  {
+    const char* source = "struct Test{int a:16; int b:17;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[1].offset == 4);
+  }
+
+  SECTION("Can parse the size of a field after a bit field")
+  {
+    const char* source = "struct Test{int a:16; int b:17; int c;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[2].size == 4);
+  }
+
+  SECTION("Can parse the offset of a field after a bitfield")
+  {
+    const char* source = "struct Test{int a:16; int b:17; int c;};\n";
+    TempSourceFile testFile(test_filename, source);
+    auto types = GatherTypes(test_filename);
+    REQUIRE(types[0].fields[2].offset == 8);
+  }
 }
