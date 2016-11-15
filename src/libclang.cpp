@@ -1,5 +1,6 @@
 #include "../include/libclang.hpp"
 #include "../include/clang_string.hpp"
+#include <algorithm>
 #include <vector>
 
 DEFINE_FAKE(createIndex)
@@ -13,13 +14,17 @@ CXIndex createIndex()
   return clang_createIndex(0, 1);
 }
 
-CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName)
+CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName,
+                                       const std::vector<std::string>& arguments)
 {
-  CALL_FAKE(parseTranslationUnit, (index, fileName))
-  std::vector<const char*> arguments;
-  arguments.push_back("-I/usr/lib/llvm-3.8/lib/clang/3.8.0/include");
-  return clang_parseTranslationUnit(index, fileName, arguments.data(),
-                                    arguments.size(), nullptr, 0,
+  CALL_FAKE(parseTranslationUnit, (index, fileName, arguments))
+  std::vector<const char*> all_arguments;
+  all_arguments.push_back("-I/usr/lib/llvm-3.8/lib/clang/3.8.0/include");
+  std::transform(arguments.begin(), arguments.end(),
+                 std::back_inserter(all_arguments),
+                 [](const std::string& s) { return s.c_str(); });
+  return clang_parseTranslationUnit(index, fileName, all_arguments.data(),
+                                    all_arguments.size(), nullptr, 0,
                                     CXTranslationUnit_None);
 }
 

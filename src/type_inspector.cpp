@@ -44,9 +44,10 @@ CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
   return CXChildVisit_Continue;
 }
 
-std::vector<TypeInfo> GatherTypes(const char* filename)
+std::vector<TypeInfo> GatherTypes(const char* filename,
+                                  const std::vector<std::string>& arguments)
 {
-  TranslationUnit tu(filename);
+  TranslationUnit tu(filename, arguments);
   auto rootCursor = clang_getTranslationUnitCursor(tu.cxTranslationUnit());
 
   std::vector<TypeInfo> types;
