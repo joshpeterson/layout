@@ -6,9 +6,9 @@
 #include "../include/type_inspector.hpp"
 #include <iostream>
 
-int ComputeLayout(const char* filename)
+int ComputeLayout(const char* filename, const std::vector<std::string>& arguments)
 {
-  auto types = GatherTypes(filename);
+  auto types = GatherTypes(filename, arguments);
   std::cout << MarkdownFor(types);
 
   std::cout << "Use this snippet with your compiler:\n";
