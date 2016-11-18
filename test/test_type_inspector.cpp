@@ -128,7 +128,7 @@ TEST_CASE("Type Inspector")
     const char* source = "#include <string>\n"
                          "struct Test{std::string field;};\n";
     auto types = Setup(source);
-    REQUIRE(types[0].fields[0].size == 8);
+    REQUIRE(types[0].fields[0].size == 32);
   }
 
   SECTION("Can parse the offset of a field using a standard library type")
@@ -137,7 +137,7 @@ TEST_CASE("Type Inspector")
                          "struct Test{std::string field;\n"
                          "int field2;};\n";
     auto types = Setup(source);
-    REQUIRE(types[0].fields[1].offset == 8);
+    REQUIRE(types[0].fields[1].offset == 32);
   }
 
   SECTION("Can parse the size of a field in a bit field")
