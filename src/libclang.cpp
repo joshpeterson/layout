@@ -20,6 +20,7 @@ CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName,
   CALL_FAKE(parseTranslationUnit, (index, fileName, arguments))
   std::vector<const char*> all_arguments;
   all_arguments.push_back("-I/usr/lib/llvm-3.8/lib/clang/3.8.1/include");
+  all_arguments.push_back("-I/usr/lib/llvm-3.8/lib/clang/3.8/include");
   std::transform(arguments.begin(), arguments.end(),
                  std::back_inserter(all_arguments),
                  [](const std::string& s) { return s.c_str(); });
