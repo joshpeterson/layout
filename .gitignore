@@ -3,5 +3,6 @@ scratch/
 *.swp
 *.swo
 *.o
+tags
 layout
 layout_test
