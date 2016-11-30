@@ -1,4 +1,6 @@
 #include "../include/output_string.hpp"
+#include "../include/code_writer.hpp"
+#include "../include/load_file.hpp"
 #include <sstream>
 
 std::vector<std::string> CodeForStrings(const std::vector<TypeInfo>& types)
@@ -22,4 +24,20 @@ std::vector<std::string> CodeForStrings(const std::vector<TypeInfo>& types)
   }
 
   return code;
+}
+
+void OutputString(const std::vector<TypeInfo>& types, const char* filename,
+                  std::ostream& out)
+{
+  CodeWriter writer(out);
+
+  writer.WriteIncludes();
+  writer.WriteLine();
+  writer.WriteLine(LoadFile(filename));
+  writer.WriteMainStart();
+
+  for (auto line : CodeForStrings(types))
+    writer.WriteLineIndented(line);
+
+  writer.WriteMainEnd();
 }
