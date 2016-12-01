@@ -33,7 +33,10 @@ void OutputString(const std::vector<TypeInfo>& types, const char* filename,
 
   writer.WriteIncludes();
   writer.WriteLine();
-  writer.WriteLine(LoadFile(filename));
+  auto original = LoadFile(filename);
+  auto withoutClass = writer.Replace(original, "class", "struct");
+  auto withoutPrivate = writer.Replace(withoutClass, "private:", "public:");
+  writer.WriteLine(withoutPrivate);
   writer.WriteMainStart();
 
   for (auto line : CodeForStrings(types))

@@ -45,4 +45,16 @@ TEST_CASE("Code Writer")
     writer.WriteMainEnd();
     REQUIRE(code.str() == "\treturn 0;\n}\n");
   }
+
+  SECTION("Can replace text in string")
+  {
+    std::string expected = "struct Test {};";
+    REQUIRE(writer.Replace("class Test {};", "class", "struct") == expected);
+  }
+
+  SECTION("Does not replace anything when the match is not found")
+  {
+    std::string expected = "class Test {};";
+    REQUIRE(writer.Replace(expected, "private:", "public:") == expected);
+  }
 }
