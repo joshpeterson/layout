@@ -1,5 +1,6 @@
 #include "../include/libclang.hpp"
 #include "../include/clang_string.hpp"
+#include "../include/platform.hpp"
 #include <algorithm>
 #include <vector>
 
@@ -19,7 +20,7 @@ CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName,
 {
   CALL_FAKE(parseTranslationUnit, (index, fileName, arguments))
   std::vector<const char*> all_arguments;
-  all_arguments.push_back("-I/usr/lib/llvm-3.8/lib/clang/3.8.0/include");
+  all_arguments.push_back(SystemIncludeDirectoryArgument);
   std::transform(arguments.begin(), arguments.end(),
                  std::back_inserter(all_arguments),
                  [](const std::string& s) { return s.c_str(); });

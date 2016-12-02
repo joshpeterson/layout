@@ -1,3 +1,19 @@
+ifeq ($(OS),Windows_NT)
+  uname_S := Windows
+else
+  uname_S := $(shell uname -s)
+endif
+
+ifeq ($(uname_S), Darwin)
+  LDFLAGS += -L/usr/local/opt/llvm38/lib/llvm-3.8/lib
+  INCLUDES += -I/usr/local/opt/llvm38/lib/llvm-3.8/include
+endif
+
+ifeq ($(uname_S), Linux)
+  LDFLAGS += -L/usr/lib/llvm-3.8/lib
+  INCLUDES += -I/usr/lib/llvm-3.8/include
+endif
+
 LAYOUT_SRC = $(wildcard src/*.cpp)
 LAYOUT_OBJ = $(LAYOUT_SRC:.cpp=.o)
 
@@ -7,10 +23,8 @@ EXE_OBJ = $(EXE_SRC:.cpp=.o)
 TEST_SRC = $(wildcard test/*.cpp)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
-LDFLAGS += -L/usr/lib/llvm-3.8/lib
-LIBS += -lclang
 
-INCLUDES += -I/usr/lib/llvm-3.8/include
+LIBS += -lclang
 CXXFLAGS += -Wall -Werror -fno-rtti -std=c++14
 
 DEBUG ?= 1
