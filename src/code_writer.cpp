@@ -31,6 +31,17 @@ void CodeWriter::WriteMainEnd()
   out_ << "}\n";
 }
 
+void CodeWriter::WriteFieldInformationStruct()
+{
+  out_ << "typedef struct\n"
+          "{\n"
+          "  const char* name;\n"
+          "  const char* type;\n"
+          "  size_t offset;\n"
+          "  size_t size;\n"
+          "} FieldInfo;";
+}
+
 std::string CodeWriter::Replace(const std::string& haystack,
                                 const std::string& needle,
                                 const std::string& replacement)
