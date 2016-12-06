@@ -25,7 +25,7 @@ TEST_CASE("Code Writer")
   {
     std::string expected = "struct Test{};";
     writer.WriteLineIndented(expected);
-    REQUIRE(code.str() == "\t" + expected + "\n");
+    REQUIRE(code.str() == "  " + expected + "\n");
   }
 
   SECTION("Can write blank line")
@@ -43,7 +43,7 @@ TEST_CASE("Code Writer")
   SECTION("Can write main end")
   {
     writer.WriteMainEnd();
-    REQUIRE(code.str() == "\treturn 0;\n}\n");
+    REQUIRE(code.str() == "  return 0;\n}\n");
   }
 
   SECTION("Can replace text in string")
@@ -66,7 +66,7 @@ TEST_CASE("Code Writer")
                     "  const char* type;\n"
                     "  size_t offset;\n"
                     "  size_t size;\n"
-                    "} FieldInfo;";
+                    "} FieldInfo;\n";
     writer.WriteFieldInformationStruct();
     REQUIRE(code.str() == expected);
   }

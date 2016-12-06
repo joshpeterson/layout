@@ -6,8 +6,8 @@ CodeWriter::CodeWriter(std::ostream& out) : out_(out) {}
 
 void CodeWriter::WriteIncludes()
 {
-  out_ << "#include <stdio.h>\n";
-  out_ << "#include <stddef.h>\n";
+  WriteLine("#include <stdio.h>");
+  WriteLine("#include <stddef.h>");
 }
 
 void CodeWriter::WriteLine() { WriteLine(std::string()); }
@@ -16,30 +16,30 @@ void CodeWriter::WriteLine(const std::string& code) { out_ << code << "\n"; }
 
 void CodeWriter::WriteLineIndented(const std::string& code)
 {
-  WriteLine("\t" + code);
+  WriteLine("  " + code);
 }
 
 void CodeWriter::WriteMainStart()
 {
-  out_ << "int main(int argc, const char* argv[])\n";
-  out_ << "{\n";
+  WriteLine("int main(int argc, const char* argv[])");
+  WriteLine("{");
 }
 
 void CodeWriter::WriteMainEnd()
 {
-  out_ << "\treturn 0;\n";
-  out_ << "}\n";
+  WriteLineIndented("return 0;");
+  WriteLine("}");
 }
 
 void CodeWriter::WriteFieldInformationStruct()
 {
-  out_ << "typedef struct\n"
-          "{\n"
-          "  const char* name;\n"
-          "  const char* type;\n"
-          "  size_t offset;\n"
-          "  size_t size;\n"
-          "} FieldInfo;";
+  WriteLine("typedef struct");
+  WriteLine("{");
+  WriteLineIndented("const char* name;");
+  WriteLineIndented("const char* type;");
+  WriteLineIndented("size_t offset;");
+  WriteLineIndented("size_t size;");
+  WriteLine("} FieldInfo;");
 }
 
 std::string CodeWriter::Replace(const std::string& haystack,
