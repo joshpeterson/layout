@@ -57,17 +57,4 @@ TEST_CASE("Code Writer")
     std::string expected = "class Test {};";
     REQUIRE(writer.Replace(expected, "private:", "public:") == expected);
   }
-
-  SECTION("Can write field information struct")
-  {
-    auto expected = "typedef struct\n"
-                    "{\n"
-                    "  const char* name;\n"
-                    "  const char* type;\n"
-                    "  size_t offset;\n"
-                    "  size_t size;\n"
-                    "} FieldInfo;\n";
-    writer.WriteFieldInformationStruct();
-    REQUIRE(code.str() == expected);
-  }
 }

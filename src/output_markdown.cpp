@@ -27,14 +27,4 @@ void OutputMarkdown(const std::vector<TypeInfo>& types, std::ostream& out)
 {
   out << "Clang reports this information, your compiler may vary:\n";
   out << MarkdownFor(types);
-
-  out << "Use this snippet with your compiler:\n";
-  out << "```\n";
-
-  for (auto line : CodeForStrings(types))
-  {
-    out << line << "\n";
-  }
-
-  out << "```\n";
 }

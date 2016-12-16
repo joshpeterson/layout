@@ -1,26 +1,48 @@
 #include "../include/output_string.hpp"
 #include "../include/code_writer.hpp"
 #include "../include/load_file.hpp"
+#include <cstring>
 #include <sstream>
+#include <string>
 
-std::vector<std::string> CodeForStrings(const std::vector<TypeInfo>& types)
+static std::vector<std::string> CodeForType(const TypeInfo& type, bool firstType)
 {
   std::vector<std::string> code;
+  auto numberOfFields = type.fields.size();
+  if (numberOfFields != 0)
+  {
+    if (!firstType)
+      code.push_back(EmitEmptyLine());
+
+    auto typeName = type.name;
+    code.push_back(EmitFieldCount(typeName, numberOfFields));
+
+    code.push_back(EmitFieldArrayStart(typeName, numberOfFields));
+    for (auto field : type.fields)
+      code.push_back("  " + EmitFieldArrayEntry(typeName, field));
+    code.push_back(EmitFieldArrayEnd());
+
+    code.push_back(EmitTypeNameAndSize(type));
+
+    auto widths = ComputeColumnWidths(type.fields);
+    code.push_back(EmitHeaderRow(widths));
+
+    code.push_back(EmitForLoopStart(typeName));
+    code.push_back("  " + EmitFieldOutput(widths));
+    code.push_back(EmitForLoopEnd());
+  }
+
+  return code;
+}
+
+static std::vector<std::string> CodeForTypes(const std::vector<TypeInfo>& types)
+{
+  std::vector<std::string> code;
+  auto i = 0;
   for (auto type : types)
   {
-    std::stringstream line;
-    line << "printf(\"" << type.name << " - size: %d bytes\\n\", (int)sizeof("
-         << type.name << "));";
-    code.push_back(line.str());
-
-    for (auto field : type.fields)
-    {
-      std::stringstream line;
-      line << "printf(\"* " << field.name << " - type: " << field.type
-           << " offset: %d size: %d\\n\", (int)offsetof(" << type.name << ", "
-           << field.name << "), (int)sizeof(" << field.type << "));";
-      code.push_back(line.str());
-    }
+    auto codeForType = CodeForType(type, i == 0);
+    code.insert(code.end(), codeForType.begin(), codeForType.end());
   }
 
   return code;
@@ -37,10 +59,133 @@ void OutputString(const std::vector<TypeInfo>& types, const char* filename,
   auto withoutClass = writer.Replace(original, "class", "struct");
   auto withoutPrivate = writer.Replace(withoutClass, "private:", "public:");
   writer.WriteLine(withoutPrivate);
+  writer.WriteLine(EmitFieldInformationStruct());
+
   writer.WriteMainStart();
 
-  for (auto line : CodeForStrings(types))
+  for (auto line : CodeForTypes(types))
     writer.WriteLineIndented(line);
 
   writer.WriteMainEnd();
+}
+
+std::string EmitFieldCount(const std::string& typeName, int numberOfFields)
+{
+  std::stringstream out;
+  out << "const int " << typeName << "_fieldCount = " << numberOfFields << ";";
+  return out.str();
+}
+
+std::string EmitFieldArrayStart(const std::string& typeName, int numberOfFields)
+{
+  std::stringstream out;
+  out << "FieldInfo " << typeName << "_fields[" << numberOfFields << "] = {";
+  return out.str();
+}
+
+std::string EmitFieldArrayEnd() { return "};"; }
+
+std::string EmitFieldArrayEntry(const std::string& typeName,
+                                const FieldInfo& field)
+{
+  std::stringstream out;
+  out << "{\"" << field.name << "\", \"" << field.type << "\", offsetof("
+      << typeName << ", " << field.name << "), sizeof(" << field.type << ")},";
+  return out.str();
+}
+
+std::string EmitFieldInformationStruct()
+{
+  std::stringstream out;
+  out << "typedef struct\n";
+  out << "{\n";
+  out << "  const char* name;\n";
+  out << "  const char* type;\n";
+  out << "  size_t offset;\n";
+  out << "  size_t size;\n";
+  out << "} FieldInfo;\n";
+  return out.str();
+}
+
+std::string EmitTypeNameAndSize(const TypeInfo& typeInfo)
+{
+  std::stringstream out;
+  out << "printf(\"" << typeInfo.name << " (%zu bytes):\\n\", sizeof("
+      << typeInfo.name << "));";
+  return out.str();
+}
+
+std::string EmitForLoopStart(const std::string& typeName)
+{
+  std::stringstream out;
+  out << "for (int i = 0; i < " << typeName << "_fieldCount; i++)\n";
+  out << "  {\n";
+  out << "    FieldInfo* field = &" << typeName << "_fields[i];\n"
+      << "    size_t padding = i < " << typeName << "_fieldCount - 1 ? "
+      << typeName
+      << "_fields[i + 1].offset - field->offset - field->size : sizeof("
+      << typeName << ") - field->offset - field->size;\n";
+  return out.str();
+}
+
+std::string EmitForLoopEnd() { return "}"; }
+
+std::string EmitHeaderRow(const ColumnWidths& widths)
+{
+  std::stringstream out;
+  out << "printf(\"%" << widths.name << "s | %" << widths.type << "s | %"
+      << widths.offset << "s | %" << widths.size << "s | %" << widths.padding
+      << "s\\n\", \"Field\", \"Type\", "
+         "\"Offset\", \"Size\", \"Padding\");";
+  return out.str();
+}
+
+std::string EmitFieldOutput(const ColumnWidths& widths)
+{
+  std::stringstream out;
+  out << "printf(\"%" << widths.name << "s | %" << widths.type << "s | %"
+      << widths.offset << "zu | %" << widths.size << "zu | %" << widths.padding
+      << "zu\\n\", "
+      << "field->name, field->type, field->offset, field->size, padding);";
+  return out.str();
+}
+
+std::string EmitEmptyLine() { return "printf(\"\\n\");"; }
+
+ColumnWidths ComputeColumnWidths(const std::vector<FieldInfo>& fields)
+{
+  ColumnWidths widths;
+  widths.type = FindLongestFieldTypeName(fields);
+  widths.name = FindLongestFieldName(fields);
+  widths.size = FindLongestFieldSize(fields);
+  widths.offset = FindLongestFieldOffset(fields);
+  widths.padding = 7;
+
+  return widths;
+}
+
+size_t FindLongestFieldTypeName(const std::vector<FieldInfo>& fields)
+{
+  return FindLongestFieldEntryName(fields, [](auto field) { return field.type; },
+                                   std::strlen("Type"));
+}
+
+size_t FindLongestFieldName(const std::vector<FieldInfo>& fields)
+{
+  return FindLongestFieldEntryName(fields, [](auto field) { return field.name; },
+                                   std::strlen("Name"));
+}
+
+size_t FindLongestFieldSize(const std::vector<FieldInfo>& fields)
+{
+  return FindLongestFieldEntryName(
+      fields, [](auto field) { return std::to_string(field.size); },
+      std::strlen("Size"));
+}
+
+size_t FindLongestFieldOffset(const std::vector<FieldInfo>& fields)
+{
+  return FindLongestFieldEntryName(
+      fields, [](auto field) { return std::to_string(field.offset); },
+      std::strlen("Offset"));
 }

@@ -31,17 +31,6 @@ void CodeWriter::WriteMainEnd()
   WriteLine("}");
 }
 
-void CodeWriter::WriteFieldInformationStruct()
-{
-  WriteLine("typedef struct");
-  WriteLine("{");
-  WriteLineIndented("const char* name;");
-  WriteLineIndented("const char* type;");
-  WriteLineIndented("size_t offset;");
-  WriteLineIndented("size_t size;");
-  WriteLine("} FieldInfo;");
-}
-
 std::string CodeWriter::Replace(const std::string& haystack,
                                 const std::string& needle,
                                 const std::string& replacement)

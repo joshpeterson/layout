@@ -11,7 +11,6 @@ public:
   void WriteLineIndented(const std::string& code);
   void WriteMainStart();
   void WriteMainEnd();
-  void WriteFieldInformationStruct();
   std::string Replace(const std::string& haystack, const std::string& needle,
                       const std::string& replacement);
 
