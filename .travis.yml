@@ -1,15 +1,13 @@
 # Enable C++ support
-sudo: required
-dist: trusty
 language: cpp
-
-os:
-  - linux
-  - osx
 
 matrix:
   include:
-    - compiler: gcc
+    - os: osx
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
       addons:
         apt:
           sources:
