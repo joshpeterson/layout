@@ -3,6 +3,10 @@ sudo: required
 dist: trusty
 language: cpp
 
+os:
+  - linux
+  - osx
+
 matrix:
   include:
     - compiler: gcc
@@ -15,8 +19,11 @@ matrix:
       env: COMPILER=g++-5
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libclang-3.8-dev
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libclang-3.8-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm38; fi
+
 # Build steps
 script:
   - ./build.sh
