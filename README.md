@@ -36,7 +36,7 @@ Then we can run `layout` like this:
 
 ```
 $ layout test.cpp | g++ -xc++ -;./a.out
-ReflectionEventInfo (64 bytes):
+EventInfo (64 bytes):
           Field |     Type | Offset | Size | Padding
   declaringType |   Type * |      0 |    8 |       0
   reflectedType |   Type * |      8 |    8 |       0
