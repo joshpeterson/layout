@@ -37,5 +37,6 @@ int main(int argc, const char* argv[])
     return 1;
   }
 
-  return ComputeLayout(argv[1], TransformArguments(argc - 2, &argv[2])); // NOLINT
+  return ComputeLayout(argv[1], TransformArguments(argc - 2, &argv[2]), // NOLINT
+                       std::cout);
 }
