@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stddef.h>
+
+struct Test
+{
+  int field;
+};
+
+typedef struct
+{
+  const char* name;
+  const char* type;
+  size_t offset;
+  size_t size;
+} FieldInfo;
+
+int main(int argc, const char* argv[])
+{
+  const int Test_fieldCount = 1;
+  FieldInfo Test_fields[1] = {
+    {"field", "int", offsetof(Test, field), sizeof(int)},
+  };
+  printf("Test (%zu bytes):\n", sizeof(Test));
+  printf("%5s | %4s | %6s | %4s | %7s\n", "Field", "Type", "Offset", "Size", "Padding");
+  for (int i = 0; i < Test_fieldCount; i++)
+  {
+    FieldInfo* field = &Test_fields[i];
+    size_t padding = i < Test_fieldCount - 1 ? Test_fields[i + 1].offset - field->offset - field->size : sizeof(Test) - field->offset - field->size;
+
+    printf("%5s | %4s | %6zu | %4zu | %7zu\n", field->name, field->type, field->offset, field->size, padding);
+  }
+  return 0;
+}

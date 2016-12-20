@@ -23,8 +23,8 @@ EXE_OBJ = $(EXE_SRC:.cpp=.o)
 TEST_SRC = $(wildcard test/*.cpp)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
-
 LIBS += -lclang
+TEST_LIBS += -lstdc++fs
 CXXFLAGS += -Wall -Werror -fno-rtti -std=c++14
 
 DEBUG ?= 1
@@ -44,7 +44,7 @@ layout: $(EXE_OBJ) $(LAYOUT_OBJ)
 	$(CXX) $(LDFLAGS) -o layout $(EXE_OBJ) $(LAYOUT_OBJ) $(LIBS)
 
 test: $(TEST_OBJ) $(LAYOUT_OBJ)
-	$(CXX) $(LDFLAGS) -o layout_test $(TEST_OBJ) $(LAYOUT_OBJ) $(LIBS)
+	$(CXX) $(LDFLAGS) -o layout_test $(TEST_OBJ) $(LAYOUT_OBJ) $(LIBS) $(TEST_LIBS)
 
 .cpp.o:
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -c $< -o $@
