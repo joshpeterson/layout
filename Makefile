@@ -12,6 +12,7 @@ endif
 ifeq ($(uname_S), Linux)
   LDFLAGS += -L/usr/lib/llvm-3.8/lib
   INCLUDES += -I/usr/lib/llvm-3.8/include
+  TEST_LIBS += -lstdc++fs
 endif
 
 LAYOUT_SRC = $(wildcard src/*.cpp)
@@ -24,7 +25,6 @@ TEST_SRC = $(wildcard test/*.cpp)
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
 LIBS += -lclang
-TEST_LIBS += -lstdc++fs
 CXXFLAGS += -Wall -Werror -fno-rtti -std=c++14
 
 DEBUG ?= 1
