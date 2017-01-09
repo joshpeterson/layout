@@ -5,8 +5,8 @@ else
 endif
 
 ifeq ($(uname_S), Darwin)
-  LDFLAGS += -L/usr/local/opt/llvm38/lib/llvm-3.8/lib
-  INCLUDES += -I/usr/local/opt/llvm38/lib/llvm-3.8/include
+  LDFLAGS += -L/usr/local/opt/llvm@3.8/lib/llvm-3.8/lib
+  INCLUDES += -I/usr/local/opt/llvm@3.8/lib/llvm-3.8/include
 endif
 
 ifeq ($(uname_S), Linux)
