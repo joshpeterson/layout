@@ -2,6 +2,17 @@
 #include "../include/libclang.hpp"
 #include "../include/translation_unit.hpp"
 
+static bool is_forward_declaration(CXCursor cursor)
+{
+  return clang_equalCursors(clang_getCursorDefinition(cursor),
+                            clang_getNullCursor());
+}
+
+static bool is_from_file_to_inspect(CXCursor cursor)
+{
+  return clang_Location_isFromMainFile(clang_getCursorLocation(cursor));
+}
+
 CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
                                  CXClientData clientData)
 {
@@ -23,7 +34,7 @@ CXChildVisitResult field_visitor(CXCursor cursor, CXCursor /* parent */,
 CXChildVisitResult type_visitor(CXCursor cursor, CXCursor /* parent */,
                                 CXClientData clientData)
 {
-  if (clang_Location_isFromMainFile(clang_getCursorLocation(cursor)) == 0)
+  if (!is_from_file_to_inspect(cursor) || is_forward_declaration(cursor))
     return CXChildVisit_Continue;
 
   auto cursorKind = clang_getCursorKind(cursor);

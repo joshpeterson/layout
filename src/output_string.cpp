@@ -9,21 +9,25 @@ static std::vector<std::string> CodeForType(const TypeInfo& type, bool firstType
 {
   std::vector<std::string> code;
   auto numberOfFields = type.fields.size();
+
+  if (!firstType)
+    code.push_back(EmitEmptyLine());
+
+  auto typeName = type.name;
   if (numberOfFields != 0)
   {
-    if (!firstType)
-      code.push_back(EmitEmptyLine());
-
-    auto typeName = type.name;
     code.push_back(EmitFieldCount(typeName, numberOfFields));
 
     code.push_back(EmitFieldArrayStart(typeName, numberOfFields));
     for (auto field : type.fields)
       code.push_back("  " + EmitFieldArrayEntry(typeName, field));
     code.push_back(EmitFieldArrayEnd());
+  }
 
-    code.push_back(EmitTypeNameAndSize(type));
+  code.push_back(EmitTypeNameAndSize(type));
 
+  if (numberOfFields != 0)
+  {
     auto widths = ComputeColumnWidths(type.fields);
     code.push_back(EmitHeaderRow(widths));
 

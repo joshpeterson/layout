@@ -183,6 +183,13 @@ TEST_CASE("Type Inspector")
     auto types = Setup(source, arguments);
     REQUIRE(types[0].fields[0].size == 4);
   }
+
+  SECTION("Skips a forward declaration")
+  {
+    const char* source = "struct Test;";
+    auto types = Setup(source);
+    REQUIRE(types.size() == 0);
+  }
 }
 
 std::vector<TypeInfo> Setup(const char* source)

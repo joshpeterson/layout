@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stddef.h>
+
+struct EmptyType
+{
+};
+
+typedef struct
+{
+  const char* name;
+  const char* type;
+  size_t offset;
+  size_t size;
+} FieldInfo;
+
+int main(int argc, const char* argv[])
+{
+  printf("EmptyType (%zu bytes):\n", sizeof(EmptyType));
+  return 0;
+}
