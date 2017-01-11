@@ -15,6 +15,7 @@ typedef struct
 
 int main(int argc, const char* argv[])
 {
-  printf("EmptyType (%zu bytes):\n", sizeof(EmptyType));
+  printf("EmptyType (%zub):\n", sizeof(EmptyType));
+  printf("No fields\n");
   return 0;
 }

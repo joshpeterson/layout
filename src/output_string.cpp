@@ -26,7 +26,11 @@ static std::vector<std::string> CodeForType(const TypeInfo& type, bool firstType
 
   code.push_back(EmitTypeNameAndSize(type));
 
-  if (numberOfFields != 0)
+  if (numberOfFields == 0)
+  {
+    code.push_back(EmitNoFieldsLine());
+  }
+  else
   {
     auto widths = ComputeColumnWidths(type.fields);
     code.push_back(EmitHeaderRow(widths));
@@ -114,8 +118,8 @@ std::string EmitFieldInformationStruct()
 std::string EmitTypeNameAndSize(const TypeInfo& typeInfo)
 {
   std::stringstream out;
-  out << "printf(\"" << typeInfo.name << " (%zu bytes):\\n\", sizeof("
-      << typeInfo.name << "));";
+  out << "printf(\"" << typeInfo.name << " (%zub):\\n\", sizeof(" << typeInfo.name
+      << "));";
   return out.str();
 }
 
@@ -155,6 +159,8 @@ std::string EmitFieldOutput(const ColumnWidths& widths)
 }
 
 std::string EmitEmptyLine() { return "printf(\"\\n\");"; }
+
+std::string EmitNoFieldsLine() { return "printf(\"No fields\\n\");"; }
 
 ColumnWidths ComputeColumnWidths(const std::vector<FieldInfo>& fields)
 {

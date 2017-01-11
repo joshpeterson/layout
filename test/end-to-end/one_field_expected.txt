@@ -20,7 +20,7 @@ int main(int argc, const char* argv[])
   FieldInfo Test_fields[1] = {
     {"field", "int", offsetof(Test, field), sizeof(int)},
   };
-  printf("Test (%zu bytes):\n", sizeof(Test));
+  printf("Test (%zub):\n", sizeof(Test));
   printf("%5s | %4s | %6s | %4s | %7s\n", "Field", "Type", "Offset", "Size", "Padding");
   for (int i = 0; i < Test_fieldCount; i++)
   {

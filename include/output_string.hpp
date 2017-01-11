@@ -18,6 +18,7 @@ std::string EmitTypeNameAndSize(const TypeInfo& typeInfo);
 std::string EmitForLoopStart(const std::string& typeName);
 std::string EmitForLoopEnd();
 std::string EmitEmptyLine();
+std::string EmitNoFieldsLine();
 
 struct ColumnWidths
 {

@@ -44,7 +44,7 @@ TEST_CASE("Output String")
   {
     TypeInfo typeInfo{"TestType", 24};
     REQUIRE(EmitTypeNameAndSize(typeInfo) ==
-            "printf(\"TestType (%zu bytes):\\n\", sizeof(TestType));");
+            "printf(\"TestType (%zub):\\n\", sizeof(TestType));");
   }
 
   std::vector<FieldInfo> fields{{"Big", "field1", 16, 0},
@@ -92,5 +92,10 @@ TEST_CASE("Output String")
   SECTION("Can emit an empty line")
   {
     REQUIRE(EmitEmptyLine() == "printf(\"\\n\");");
+  }
+
+  SECTION("Can emit nor fields code")
+  {
+    REQUIRE(EmitNoFieldsLine() == "printf(\"No fields\\n\");");
   }
 }
