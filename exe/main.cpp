@@ -1,17 +1,19 @@
 #include "../include/driver.hpp"
+#include "../include/gsl/multi_span"
 #include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <string>
 #include <vector>
 
-static std::vector<std::string> TransformArguments(int number, const char** argv)
+static std::vector<std::string> ToStrings(gsl::multi_span<const char*> args)
 {
   std::vector<std::string> arguments;
-  if (number != 0)
+  auto number_of_args = args.rank();
+  if (number_of_args != 0)
   {
-    arguments.reserve(number);
-    std::copy_n(argv, number, std::back_inserter(arguments));
+    arguments.reserve(number_of_args);
+    std::copy(args.begin(), args.end(), std::back_inserter(arguments));
   }
 
   return arguments;
@@ -30,13 +32,12 @@ static bool Equals(const char* standard, const char* candidate1,
 
 int main(int argc, const char* argv[])
 {
-  // These lines violate cppcoreguidelines-pro-bounds-pointer-arithmetic
-  if (argc < 2 || (argc == 2 && Equals(argv[1], "--help", "-h"))) // NOLINT
+  auto args = gsl::multi_span<const char*>(argv, argc);
+  if (argc < 2 || (argc == 2 && Equals(args[1], "--help", "-h")))
   {
     PrintUsage();
     return 1;
   }
 
-  return ComputeLayout(argv[1], TransformArguments(argc - 2, &argv[2]), // NOLINT
-                       std::cout);
+  return ComputeLayout(args[1], ToStrings(args.last(argc - 2)), std::cout);
 }
