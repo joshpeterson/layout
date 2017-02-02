@@ -201,7 +201,7 @@ std::vector<TypeInfo> Setup(const char* source)
 std::vector<TypeInfo> Setup(const char* source,
                             const std::vector<std::string>& arguments)
 {
-  const char* test_filename = "source_file_for_tests.hh";
-  TempSourceFile testFile(test_filename, source);
-  return GatherTypes(test_filename, arguments);
+  const char* testFilename = "source_file_for_tests.hh";
+  TempSourceFile testFile(testFilename, source);
+  return GatherTypes(testFilename, arguments);
 }

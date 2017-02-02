@@ -1,4 +1,3 @@
-#include "../include/libclang.hpp"
 #include "libclang_test_double.hpp"
 #include <string>
 #include <vector>
@@ -12,14 +11,14 @@ bool disposeTranslationUnitCalled = false;
 bool disposeIndexCalled = false;
 CXTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
-CXIndex createIndexDouble()
+CXIndex CreateIndexDouble()
 {
   createIndexCalled = true;
   return expectedIndex;
 }
 
 CXTranslationUnit
-parseTranslationUnitDouble(CXIndex index, const char* fileName,
+ParseTranslationUnitDouble(CXIndex index, const char* fileName,
                            const std::vector<std::string>& arguments)
 {
   parseTranslationUnitCalled = true;
@@ -29,10 +28,10 @@ parseTranslationUnitDouble(CXIndex index, const char* fileName,
   return expectedTranslationUnit;
 }
 
-void disposeTranslationUnitDouble(CXTranslationUnit translationUnit)
+void DisposeTranslationUnitDouble(CXTranslationUnit translationUnit)
 {
   disposeTranslationUnitCalled = true;
   translationUnitPassedToDisposeTranslationUnit = translationUnit;
 }
 
-void disposeIndexDouble(CXIndex /* index */) { disposeIndexCalled = true; }
+void DisposeIndexDouble(CXIndex /* index */) { disposeIndexCalled = true; }

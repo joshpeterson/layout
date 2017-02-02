@@ -5,13 +5,13 @@
 #include <string>
 #include <vector>
 
-FAKEABLE(CXIndex, createIndex, ())
-FAKEABLE(CXTranslationUnit, parseTranslationUnit,
+FAKEABLE(CXIndex, CreateIndex, ())
+FAKEABLE(CXTranslationUnit, ParseTranslationUnit,
          (CXIndex index, const char* fileName,
           const std::vector<std::string>& arguments))
-FAKEABLE(void, disposeTranslationUnit, (CXTranslationUnit translationUnit))
-FAKEABLE(void, disposeIndex, (CXIndex index))
+FAKEABLE(void, DisposeTranslationUnit, (CXTranslationUnit translationUnit))
+FAKEABLE(void, DisposeIndex, (CXIndex index))
 
-std::string getCursorSpelling(CXCursor cursor);
-std::string getTypeSpelling(CXType type);
-int64_t getOffsetOfFieldInBytes(CXCursor cursor);
+std::string GetCursorSpelling(CXCursor cursor);
+std::string GetTypeSpelling(CXType type);
+int64_t GetOffsetOfFieldInBytes(CXCursor cursor);

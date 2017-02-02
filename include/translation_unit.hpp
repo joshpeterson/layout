@@ -9,7 +9,7 @@ public:
   TranslationUnit(const char* fileName, const std::vector<std::string>& arguments);
   ~TranslationUnit();
 
-  CXTranslationUnit cxTranslationUnit() const;
+  CXTranslationUnit GetCXTranslationUnit() const;
 
 private:
   CXIndex index_;

@@ -8,7 +8,7 @@ public:
   explicit ClangString(CXString value);
   ~ClangString();
 
-  std::string str() const;
+  std::string Str() const;
 
 private:
   CXString value_;

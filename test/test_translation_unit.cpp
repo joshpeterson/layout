@@ -17,10 +17,10 @@ extern CXTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
 TEST_CASE("Translation Unit")
 {
-  FAKE(createIndex, createIndexDouble);
-  FAKE(parseTranslationUnit, parseTranslationUnitDouble);
-  FAKE(disposeTranslationUnit, disposeTranslationUnitDouble);
-  FAKE(disposeIndex, disposeIndexDouble);
+  FAKE(CreateIndex, CreateIndexDouble);
+  FAKE(ParseTranslationUnit, ParseTranslationUnitDouble);
+  FAKE(DisposeTranslationUnit, DisposeTranslationUnitDouble);
+  FAKE(DisposeIndex, DisposeIndexDouble);
 
   SECTION("Creating a TranslationUnit calls createIndex")
   {

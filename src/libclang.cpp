@@ -4,56 +4,56 @@
 #include <algorithm>
 #include <vector>
 
-DEFINE_FAKE(createIndex)
-DEFINE_FAKE(parseTranslationUnit)
-DEFINE_FAKE(disposeTranslationUnit)
-DEFINE_FAKE(disposeIndex)
+DEFINE_FAKE(CreateIndex)
+DEFINE_FAKE(ParseTranslationUnit)
+DEFINE_FAKE(DisposeTranslationUnit)
+DEFINE_FAKE(DisposeIndex)
 
-CXIndex createIndex()
+CXIndex CreateIndex()
 {
-  CALL_FAKE(createIndex, ())
+  CALL_FAKE(CreateIndex, ())
   return clang_createIndex(0, 1);
 }
 
-CXTranslationUnit parseTranslationUnit(CXIndex index, const char* fileName,
+CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
                                        const std::vector<std::string>& arguments)
 {
-  CALL_FAKE(parseTranslationUnit, (index, fileName, arguments))
-  std::vector<const char*> all_arguments;
-  all_arguments.push_back(SystemIncludeDirectoryArgument);
+  CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments))
+  std::vector<const char*> allArguments;
+  allArguments.push_back(SystemIncludeDirectoryArgument);
   std::transform(arguments.begin(), arguments.end(),
-                 std::back_inserter(all_arguments),
+                 std::back_inserter(allArguments),
                  [](const std::string& s) { return s.c_str(); });
-  return clang_parseTranslationUnit(index, fileName, all_arguments.data(),
-                                    all_arguments.size(), nullptr, 0,
+  return clang_parseTranslationUnit(index, fileName, allArguments.data(),
+                                    allArguments.size(), nullptr, 0,
                                     CXTranslationUnit_None);
 }
 
-void disposeTranslationUnit(CXTranslationUnit translationUnit)
+void DisposeTranslationUnit(CXTranslationUnit translationUnit)
 {
-  CALL_FAKE(disposeTranslationUnit, (translationUnit))
+  CALL_FAKE(DisposeTranslationUnit, (translationUnit))
   clang_disposeTranslationUnit(translationUnit);
 }
 
-void disposeIndex(CXIndex index)
+void DisposeIndex(CXIndex index)
 {
-  CALL_FAKE(disposeIndex, (index))
+  CALL_FAKE(DisposeIndex, (index))
   clang_disposeIndex(index);
 }
 
-std::string getCursorSpelling(CXCursor cursor)
+std::string GetCursorSpelling(CXCursor cursor)
 {
   ClangString cursorSpelling(clang_getCursorSpelling(cursor));
-  return cursorSpelling.str();
+  return cursorSpelling.Str();
 }
 
-std::string getTypeSpelling(CXType type)
+std::string GetTypeSpelling(CXType type)
 {
   ClangString typeSpelling(clang_getTypeSpelling(type));
-  return typeSpelling.str();
+  return typeSpelling.Str();
 }
 
-int64_t getOffsetOfFieldInBytes(CXCursor cursor)
+int64_t GetOffsetOfFieldInBytes(CXCursor cursor)
 {
   // This call finds the offset in bits.
   return clang_Cursor_getOffsetOfField(cursor) / 8;

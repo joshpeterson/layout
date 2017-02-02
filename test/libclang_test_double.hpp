@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../include/libclang.hpp"
 #include <string>
 #include <vector>
 
@@ -7,9 +8,9 @@ const CXIndex expectedIndex = reinterpret_cast<CXIndex>(1);
 const CXTranslationUnit expectedTranslationUnit =
     reinterpret_cast<CXTranslationUnit>(1);
 
-CXIndex createIndexDouble();
+CXIndex CreateIndexDouble();
 CXTranslationUnit
-parseTranslationUnitDouble(CXIndex index, const char* fileName,
+ParseTranslationUnitDouble(CXIndex index, const char* fileName,
                            const std::vector<std::string>& arguments);
-void disposeTranslationUnitDouble(CXTranslationUnit translationUnit);
-void disposeIndexDouble(CXIndex index);
+void DisposeTranslationUnitDouble(CXTranslationUnit translationUnit);
+void DisposeIndexDouble(CXIndex index);
