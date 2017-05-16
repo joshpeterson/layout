@@ -62,6 +62,14 @@ TEST_CASE("Output String")
 
   SECTION("Can compute offset column width") { REQUIRE(widths.padding == 7); }
 
+  std::vector<FieldInfo> shortFields{{"int", "i", 4, 0}, {"double", "j", 4, 8}};
+  auto shortWidths = ComputeColumnWidths(shortFields);
+
+  SECTION("Can compute name column width for short field")
+  {
+    REQUIRE(shortWidths.name == 5);
+  }
+
   SECTION("Can emit header row")
   {
     REQUIRE(EmitHeaderRow(widths) == "printf(\"%13s | %6s | %6s | %4s | "

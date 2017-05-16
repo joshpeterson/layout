@@ -183,7 +183,7 @@ size_t FindLongestFieldTypeName(const std::vector<FieldInfo>& fields)
 size_t FindLongestFieldName(const std::vector<FieldInfo>& fields)
 {
   return FindLongestFieldEntryName(fields, [](auto field) { return field.name; },
-                                   std::strlen("Name"));
+                                   std::strlen("Name") + 1);
 }
 
 size_t FindLongestFieldSize(const std::vector<FieldInfo>& fields)
