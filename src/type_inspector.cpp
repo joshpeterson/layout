@@ -1,6 +1,7 @@
 #include "../include/type_inspector.hpp"
 #include "../include/libclang.hpp"
 #include "../include/translation_unit.hpp"
+#include <algorithm>
 
 static bool IsForwardDeclaration(CXCursor cursor)
 {
@@ -11,6 +12,13 @@ static bool IsForwardDeclaration(CXCursor cursor)
 static bool IsFromFileToInspect(CXCursor cursor)
 {
   return clang_Location_isFromMainFile(clang_getCursorLocation(cursor));
+}
+
+static bool contains(const std::vector<TypeInfo>& types, unsigned hash)
+{
+  auto it = std::find_if(types.begin(), types.end(),
+                         [hash](const TypeInfo& t) { return t.hash == hash; });
+  return it != types.end();
 }
 
 CXChildVisitResult FieldVisitor(CXCursor cursor, CXCursor /* parent */,
@@ -40,14 +48,18 @@ CXChildVisitResult TypeVisitor(CXCursor cursor, CXCursor /* parent */,
   auto cursorKind = clang_getCursorKind(cursor);
   if (cursorKind == CXCursor_StructDecl || cursorKind == CXCursor_ClassDecl)
   {
-    auto type = clang_getCursorType(cursor);
-    auto size = clang_Type_getSizeOf(type);
-    TypeInfo typeInfo{GetTypeSpelling(type), size};
-
-    clang_visitChildren(cursor, FieldVisitor, &typeInfo);
-
     auto types = reinterpret_cast<std::vector<TypeInfo>*>(clientData);
-    types->push_back(typeInfo);
+    auto hash = clang_hashCursor(cursor);
+    if (!contains(*types, hash))
+    {
+      auto type = clang_getCursorType(cursor);
+      auto size = clang_Type_getSizeOf(type);
+      TypeInfo typeInfo{GetTypeSpelling(type), size, hash};
+
+      clang_visitChildren(cursor, FieldVisitor, &typeInfo);
+
+      types->push_back(typeInfo);
+    }
   }
 
   clang_visitChildren(cursor, TypeVisitor, clientData);

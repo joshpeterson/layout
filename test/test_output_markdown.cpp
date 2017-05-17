@@ -27,7 +27,7 @@ TEST_CASE("Output Markdown")
                            "\n";
     std::vector<FieldInfo> fields = {{"int", "one", 4, 0},
                                      {"double", "two", 8, 8}};
-    TypeInfo typeInfo{"Test", 16, fields};
+    TypeInfo typeInfo{"Test", 16, 0, fields};
     std::vector<TypeInfo> types{typeInfo};
     auto markdown = MarkdownFor(types);
     REQUIRE(markdown == expected);

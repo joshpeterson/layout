@@ -31,6 +31,13 @@ TEST_CASE("Type Inspector")
     REQUIRE(types.size() == 2);
   }
 
+  SECTION("Parse a C-style struct only once")
+  {
+    const char* source = "typedef struct {} Test;";
+    auto types = Setup(source);
+    REQUIRE(types.size() == 1);
+  }
+
   SECTION("Can parse the name of one type with no fields from a source file")
   {
     const char* source = "struct Test{};";

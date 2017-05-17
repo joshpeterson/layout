@@ -8,5 +8,6 @@ struct TypeInfo
 {
   std::string name;
   long long size; // in bytes
+  unsigned hash;
   std::vector<FieldInfo> fields;
 };
