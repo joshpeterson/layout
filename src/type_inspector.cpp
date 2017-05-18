@@ -5,13 +5,14 @@
 
 static bool IsForwardDeclaration(CXCursor cursor)
 {
-  return clang_equalCursors(clang_getCursorDefinition(cursor),
-                            clang_getNullCursor());
+  return static_cast<bool>(clang_equalCursors(clang_getCursorDefinition(cursor),
+                                              clang_getNullCursor()));
 }
 
 static bool IsFromFileToInspect(CXCursor cursor)
 {
-  return clang_Location_isFromMainFile(clang_getCursorLocation(cursor));
+  return static_cast<bool>(
+      clang_Location_isFromMainFile(clang_getCursorLocation(cursor)));
 }
 
 static bool contains(const std::vector<TypeInfo>& types, unsigned hash)

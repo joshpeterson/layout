@@ -195,7 +195,7 @@ TEST_CASE("Type Inspector")
   {
     const char* source = "struct Test;";
     auto types = Setup(source);
-    REQUIRE(types.size() == 0);
+    REQUIRE(types.empty());
   }
 }
 
