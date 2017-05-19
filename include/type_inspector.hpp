@@ -4,4 +4,5 @@
 #include <vector>
 
 std::vector<TypeInfo> GatherTypes(const char* filename,
-                                  const std::vector<std::string>& arguments);
+                                  const std::vector<std::string>& arguments,
+                                  bool* error);

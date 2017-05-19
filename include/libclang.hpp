@@ -8,7 +8,7 @@
 FAKEABLE(CXIndex, CreateIndex, ())
 FAKEABLE(CXTranslationUnit, ParseTranslationUnit,
          (CXIndex index, const char* fileName,
-          const std::vector<std::string>& arguments))
+          const std::vector<std::string>& arguments, bool* error))
 FAKEABLE(void, DisposeTranslationUnit, (CXTranslationUnit translationUnit))
 FAKEABLE(void, DisposeIndex, (CXIndex index))
 

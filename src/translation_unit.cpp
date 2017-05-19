@@ -4,7 +4,7 @@ TranslationUnit::TranslationUnit(const char* fileName,
                                  const std::vector<std::string>& arguments)
 {
   index_ = CreateIndex();
-  translationUnit_ = ParseTranslationUnit(index_, fileName, arguments);
+  translationUnit_ = ParseTranslationUnit(index_, fileName, arguments, &hasError_);
 }
 
 TranslationUnit::~TranslationUnit()
@@ -17,3 +17,5 @@ CXTranslationUnit TranslationUnit::GetCXTranslationUnit() const
 {
   return translationUnit_;
 }
+
+bool TranslationUnit::HasError() const { return hasError_; }

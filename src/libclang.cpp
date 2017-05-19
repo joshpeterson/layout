@@ -15,18 +15,50 @@ CXIndex CreateIndex()
   return clang_createIndex(0, 1);
 }
 
-CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
-                                       const std::vector<std::string>& arguments)
+class DiagnosticSetDisposer
 {
-  CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments))
+public:
+  explicit DiagnosticSetDisposer(const CXDiagnosticSet& diagnostics)
+      : diagnostics_(diagnostics)
+  {
+  }
+
+  ~DiagnosticSetDisposer() { clang_disposeDiagnosticSet(diagnostics_); }
+
+private:
+  const CXDiagnosticSet& diagnostics_;
+};
+
+static bool AnyErrors(const CXTranslationUnit& tu)
+{
+  auto diagnostics = clang_getDiagnosticSetFromTU(tu);
+  DiagnosticSetDisposer disposer(diagnostics);
+  auto numberOfDiagnostics = clang_getNumDiagnosticsInSet(diagnostics);
+  for (size_t i = 0; i < numberOfDiagnostics; ++i)
+  {
+    auto diagnostic = clang_getDiagnosticInSet(diagnostics, i);
+    auto severity = clang_getDiagnosticSeverity(diagnostic);
+    if (severity == CXDiagnostic_Error || severity == CXDiagnostic_Fatal)
+      return true;
+  }
+  return false;
+}
+
+CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
+                                       const std::vector<std::string>& arguments,
+                                       bool* error)
+{
+  CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments, error))
   std::vector<const char*> allArguments;
   allArguments.push_back(SystemIncludeDirectoryArgument);
   std::transform(arguments.begin(), arguments.end(),
                  std::back_inserter(allArguments),
                  [](const std::string& s) { return s.c_str(); });
-  return clang_parseTranslationUnit(index, fileName, allArguments.data(),
-                                    allArguments.size(), nullptr, 0,
-                                    CXTranslationUnit_None);
+  auto tu = clang_parseTranslationUnit(index, fileName, allArguments.data(),
+                                       allArguments.size(), nullptr, 0,
+                                       CXTranslationUnit_None);
+  *error = AnyErrors(tu);
+  return tu;
 }
 
 void DisposeTranslationUnit(CXTranslationUnit translationUnit)

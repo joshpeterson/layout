@@ -10,8 +10,10 @@ public:
   ~TranslationUnit();
 
   CXTranslationUnit GetCXTranslationUnit() const;
+  bool HasError() const;
 
 private:
   CXIndex index_;
   CXTranslationUnit translationUnit_;
+  bool hasError_;
 };

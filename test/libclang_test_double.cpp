@@ -19,7 +19,8 @@ CXIndex CreateIndexDouble()
 
 CXTranslationUnit
 ParseTranslationUnitDouble(CXIndex index, const char* fileName,
-                           const std::vector<std::string>& arguments)
+                           const std::vector<std::string>& arguments,
+                           bool* /*error*/)
 {
   parseTranslationUnitCalled = true;
   indexPassedToParseTranslationUnit = index;
