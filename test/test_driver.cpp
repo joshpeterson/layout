@@ -30,7 +30,8 @@ TEST_CASE("Driver")
 
         auto input = LoadFile(file.path().c_str());
         auto expected = LoadFile(expectedPath.c_str());
-        REQUIRE(Verify(input) == expected);
+        INFO("The expected output is in file: " << expectedPath)
+        CHECK(Verify(input) == expected);
       }
     }
   }
