@@ -14,7 +14,7 @@ typedef struct
   size_t size;
 } FieldInfo;
 
-int main(int argc, const char* argv[])
+int main(int /*argc*/, const char** /*argv*/)
 {
   const int Test_fieldCount = 1;
   FieldInfo Test_fields[1] = {

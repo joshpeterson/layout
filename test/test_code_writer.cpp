@@ -37,7 +37,7 @@ TEST_CASE("Code Writer")
   SECTION("Can write main start")
   {
     writer.WriteMainStart();
-    REQUIRE(code.str() == "int main(int argc, const char* argv[])\n{\n");
+    REQUIRE(code.str() == "int main(int /*argc*/, const char** /*argv*/)\n{\n");
   }
 
   SECTION("Can write main end")

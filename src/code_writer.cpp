@@ -21,7 +21,7 @@ void CodeWriter::WriteLineIndented(const std::string& code)
 
 void CodeWriter::WriteMainStart()
 {
-  WriteLine("int main(int argc, const char* argv[])");
+  WriteLine("int main(int /*argc*/, const char** /*argv*/)");
   WriteLine("{");
 }
 
