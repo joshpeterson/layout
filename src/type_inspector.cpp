@@ -75,15 +75,9 @@ std::vector<TypeInfo> GatherTypes(const char* filename,
   TranslationUnit tu(filename, arguments, displayDiagnostics);
 
   std::vector<TypeInfo> types;
-  if (!tu.HasError())
-  {
-    clang_visitChildren(clang_getTranslationUnitCursor(tu.GetCXTranslationUnit()),
-                        TypeVisitor, &types);
-  }
-  else if (error != nullptr)
-  {
-    *error = true;
-  }
-
+  if (error != nullptr)
+    *error = tu.HasError();
+  clang_visitChildren(clang_getTranslationUnitCursor(tu.GetCXTranslationUnit()),
+                      TypeVisitor, &types);
   return types;
 }
