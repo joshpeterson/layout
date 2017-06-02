@@ -63,7 +63,7 @@ $ ./build.sh
 
 ```
 $ brew install llvm38
-$ /build.sh
+$ ./build.sh
 ```
 
 ## License
