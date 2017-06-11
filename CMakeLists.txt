@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.2)
 project(clang-expand)
 
 set(CMAKE_MODULE_PATH
@@ -40,4 +40,8 @@ target_link_libraries(layout layoutlib ${CLANG_LIBS})
 file(GLOB LAYOUT_TEST_SOURCES test/*.cpp)
 add_compile_options("-fexceptions")
 add_executable(layout_test ${LAYOUT_TEST_SOURCES})
-target_link_libraries(layout_test layoutlib ${CLANG_LIBS} stdc++fs)
+if(UNIX AND NOT APPLE)
+  set(TEST_ADDITIONAL_LIBRARIES stdc++fs)
+endif()
+target_link_libraries(layout_test layoutlib ${CLANG_LIBS}
+  ${TEST_ADDITIONAL_LIBRARIES})

@@ -7,20 +7,23 @@ matrix:
     - os: linux
       sudo: required
       dist: trusty
-      compiler: gcc
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: COMPILER=g++-5
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libclang-3.8-dev cmake ninja-build; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y llvm-3.8-dev libclang-3.8-dev cmake ninja-build; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm38 cmake ninja; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm38 ninja; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo ln -s /usr/local/bin/llvm-config-3.8 /usr/local/bin/llvm-config; fi
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-3.8 90; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo rm -rf /usr/local/clang-3.5.0; fi
 
 # Build steps
 script:
