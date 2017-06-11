@@ -17,7 +17,7 @@ TEST_CASE("Driver")
 {
   SECTION("End to end tests")
   {
-    for (auto& file : fs::directory_iterator("test/end-to-end"))
+    for (auto& file : fs::directory_iterator("../../test/end-to-end"))
     {
       if (fs::is_regular_file(file.status()) && file.path().extension() == ".hpp")
       {

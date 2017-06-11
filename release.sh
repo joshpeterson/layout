@@ -1,9 +1,13 @@
 #!/bin/sh
 set -e
-if [ -n "$COMPILER" ]
-then
-  make DEBUG=0 CXX=$COMPILER
-else
-  make DEBUG=0
+if [ ! -d build ]; then
+  mkdir build
 fi
+cd build
+if [ ! -d Release ]; then
+  mkdir Release
+fi
+cd Release
+cmake -DCMAKE_BUILD_TYPE=Release ../.. -GNinja
+ninja
 ./layout_test

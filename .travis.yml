@@ -18,9 +18,9 @@ matrix:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libclang-3.8-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libclang-3.8-dev cmake ninja-build; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm38; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm38 cmake ninja; fi
 
 # Build steps
 script:

@@ -50,22 +50,23 @@ eventAttributes |      int |     48 |    4 |       4
 
 ## Building
 
-The `layout` utility depends on libclang.
+The `layout` utility depends on libclang. It uses CMake and Ninja to build.
 
 ### Linux
 
 ```
-$ sudo apt-get install -y libclang-3.8-dev
+$ sudo apt-get install -y libclang-3.8-dev cmake ninja-build
 $ ./build.sh
 ```
 
 ### macOS
 
 ```
-$ brew install llvm38
+$ brew install llvm38 cmake ninja
 $ ./build.sh
 ```
 
 ## License
 
-This source code is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+This source code is licensed under the [MIT
+License](http://opensource.org/licenses/MIT).
