@@ -1,5 +1,7 @@
 build/
 scratch/
+.bundle/
+vendor/
 *.swp
 *.swo
 *.o
@@ -7,3 +9,4 @@ tags
 layout
 layout_test
 layout.tar.gz
+
