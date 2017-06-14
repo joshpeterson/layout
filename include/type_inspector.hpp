@@ -5,4 +5,4 @@
 
 std::vector<TypeInfo> GatherTypes(const char* filename,
                                   const std::vector<std::string>& arguments,
-                                  bool* error);
+                                  bool* error, bool displayDiagnostics = true);

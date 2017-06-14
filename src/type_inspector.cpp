@@ -70,9 +70,9 @@ CXChildVisitResult TypeVisitor(CXCursor cursor, CXCursor /* parent */,
 
 std::vector<TypeInfo> GatherTypes(const char* filename,
                                   const std::vector<std::string>& arguments,
-                                  bool* error)
+                                  bool* error, bool displayDiagnostics)
 {
-  TranslationUnit tu(filename, arguments);
+  TranslationUnit tu(filename, arguments, displayDiagnostics);
 
   std::vector<TypeInfo> types;
   if (!tu.HasError())

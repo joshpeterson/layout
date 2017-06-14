@@ -6,7 +6,8 @@
 class TranslationUnit
 {
 public:
-  TranslationUnit(const char* fileName, const std::vector<std::string>& arguments);
+  TranslationUnit(const char* fileName, const std::vector<std::string>& arguments,
+                  bool displayDiagnostics = true);
   ~TranslationUnit();
 
   CXTranslationUnit GetCXTranslationUnit() const;

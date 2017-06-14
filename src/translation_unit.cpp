@@ -1,9 +1,10 @@
 #include "../include/translation_unit.hpp"
 
 TranslationUnit::TranslationUnit(const char* fileName,
-                                 const std::vector<std::string>& arguments)
+                                 const std::vector<std::string>& arguments,
+                                 bool displayDiagnostics)
 {
-  index_ = CreateIndex();
+  index_ = CreateIndex(displayDiagnostics);
   translationUnit_ = ParseTranslationUnit(index_, fileName, arguments, &hasError_);
 }
 

@@ -218,5 +218,5 @@ std::vector<TypeInfo> Setup(const char* source,
 {
   const char* testFilename = "source_file_for_tests.hh";
   TempSourceFile testFile(testFilename, source);
-  return GatherTypes(testFilename, arguments, error);
+  return GatherTypes(testFilename, arguments, error, /*displayDiagnostics*/ false);
 }

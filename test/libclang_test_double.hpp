@@ -8,7 +8,7 @@ const CXIndex expectedIndex = reinterpret_cast<CXIndex>(1);
 const CXTranslationUnit expectedTranslationUnit =
     reinterpret_cast<CXTranslationUnit>(1);
 
-CXIndex CreateIndexDouble();
+CXIndex CreateIndexDouble(bool displayDiagnostics);
 CXTranslationUnit
 ParseTranslationUnitDouble(CXIndex index, const char* fileName,
                            const std::vector<std::string>& arguments, bool* error);

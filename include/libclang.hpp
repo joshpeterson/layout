@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-FAKEABLE(CXIndex, CreateIndex, ())
+FAKEABLE(CXIndex, CreateIndex, (bool displayDiagnostics))
 FAKEABLE(CXTranslationUnit, ParseTranslationUnit,
          (CXIndex index, const char* fileName,
           const std::vector<std::string>& arguments, bool* error))

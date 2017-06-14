@@ -9,10 +9,10 @@ DEFINE_FAKE(ParseTranslationUnit)
 DEFINE_FAKE(DisposeTranslationUnit)
 DEFINE_FAKE(DisposeIndex)
 
-CXIndex CreateIndex()
+CXIndex CreateIndex(bool displayDiagnostics)
 {
-  CALL_FAKE(CreateIndex, ())
-  return clang_createIndex(0, 1);
+  CALL_FAKE(CreateIndex, (displayDiagnostics))
+  return clang_createIndex(0, static_cast<int>(displayDiagnostics));
 }
 
 class DiagnosticSetDisposer
