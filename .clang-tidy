@@ -1,5 +1,5 @@
 ---
-Checks:          '*,-clang-analyzer-alpha.deadcode.UnreachableCode,-readability-braces-around-statements,-cppcoreguidelines-pro-type-reinterpret-cast,-modernize-pass-by-value'
+Checks:          '*,-clang-analyzer-alpha.deadcode.UnreachableCode,-readability-braces-around-statements,-cppcoreguidelines-pro-type-reinterpret-cast,-modernize-pass-by-value,-cert-err58-cpp'
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
 User:            josh
