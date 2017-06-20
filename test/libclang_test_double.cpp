@@ -11,7 +11,7 @@ bool disposeTranslationUnitCalled = false;
 bool disposeIndexCalled = false;
 CXTranslationUnit translationUnitPassedToDisposeTranslationUnit;
 
-CXIndex CreateIndexDouble(bool displayDiagnostics)
+CXIndex CreateIndexDouble(bool /*displayDiagnostics*/)
 {
   createIndexCalled = true;
   return expectedIndex;
