@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
-project(clang-expand)
+project(layout)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
@@ -45,3 +47,8 @@ if(UNIX AND NOT APPLE)
 endif()
 target_link_libraries(layout_test layoutlib ${CLANG_LIBS}
   ${TEST_ADDITIONAL_LIBRARIES})
+
+add_custom_command(TARGET layout POST_BUILD
+                  COMMAND ${CMAKE_COMMAND} -E copy
+                  ${CMAKE_BINARY_DIR}/compile_commands.json
+                  ${CMAKE_SOURCE_DIR}/compile_commands.json)
