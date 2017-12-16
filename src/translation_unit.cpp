@@ -4,6 +4,7 @@ TranslationUnit::TranslationUnit(const char* fileName,
                                  const std::vector<std::string>& arguments,
                                  bool displayDiagnostics)
 {
+  hasError_ = false;
   index_ = CreateIndex(displayDiagnostics);
   translationUnit_ = ParseTranslationUnit(index_, fileName, arguments, &hasError_);
 }
