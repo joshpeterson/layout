@@ -25,6 +25,11 @@ public:
 
   ~DiagnosticSetDisposer() { clang_disposeDiagnosticSet(diagnostics_); }
 
+  DiagnosticSetDisposer(const DiagnosticSetDisposer&) = delete;
+  DiagnosticSetDisposer(const DiagnosticSetDisposer&&) = delete;
+  DiagnosticSetDisposer& operator=(const DiagnosticSetDisposer&) = delete;
+  DiagnosticSetDisposer& operator=(const DiagnosticSetDisposer&&) = delete;
+
 private:
   const CXDiagnosticSet& diagnostics_;
 };
