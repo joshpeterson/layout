@@ -12,3 +12,4 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../.. -GNinja
 ninja
 ./layout_test
 cd ../..
+ln -sf build/Debug/compile_commands.json compile_commands.json
