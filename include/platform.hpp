@@ -6,5 +6,5 @@ const char* SystemIncludeDirectoryArgument =
     "Developer/SDKs/MacOSX.sdk/usr /include";
 #else
 const char* SystemIncludeDirectoryArgument =
-    "-I/usr/lib/llvm-5.0/lib/clang/5.0/include";
+    "-I/usr/lib/llvm-5.0/lib/clang/5.0.1/include";
 #endif
