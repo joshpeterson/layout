@@ -1,5 +1,3 @@
-#ifndef __APPLE__
-
 #include "../include/driver.hpp"
 #include "../include/load_file.hpp"
 #include "catch.hpp"
@@ -46,5 +44,3 @@ static std::string Verify(const std::string& input)
   ComputeLayout(testFilename, empty, out);
   return out.str();
 }
-
-#endif // !__APPLE_

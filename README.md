@@ -55,14 +55,7 @@ The `layout` utility depends on libclang. It uses CMake and Ninja to build.
 ### Linux
 
 ```
-$ sudo apt-get install -y libclang-3.8-dev cmake ninja-build
-$ ./build.sh
-```
-
-### macOS
-
-```
-$ brew install llvm38 cmake ninja
+$ sudo apt-get install -y llvm-5.0-dev libclang-5.0-dev cmake ninja-build
 $ ./build.sh
 ```
 

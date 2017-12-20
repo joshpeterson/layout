@@ -42,9 +42,7 @@ target_link_libraries(layout layoutlib ${CLANG_LIBS})
 file(GLOB LAYOUT_TEST_SOURCES test/*.cpp)
 add_compile_options("-fexceptions")
 add_executable(layout_test ${LAYOUT_TEST_SOURCES})
-if(UNIX AND NOT APPLE)
-  set(TEST_ADDITIONAL_LIBRARIES stdc++fs)
-endif()
+set(TEST_ADDITIONAL_LIBRARIES stdc++fs)
 target_link_libraries(layout_test layoutlib ${CLANG_LIBS}
   ${TEST_ADDITIONAL_LIBRARIES})
 
