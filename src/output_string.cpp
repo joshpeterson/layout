@@ -19,7 +19,7 @@ static std::vector<std::string> CodeForType(const TypeInfo& type, bool firstType
     code.push_back(EmitFieldCount(typeName, numberOfFields));
 
     code.push_back(EmitFieldArrayStart(typeName, numberOfFields));
-    for (auto field : type.fields)
+    for (const auto& field : type.fields)
       code.push_back("  " + EmitFieldArrayEntry(typeName, field));
     code.push_back(EmitFieldArrayEnd());
   }
@@ -47,7 +47,7 @@ static std::vector<std::string> CodeForTypes(const std::vector<TypeInfo>& types)
 {
   std::vector<std::string> code;
   auto i = 0;
-  for (auto type : types)
+  for (const auto& type : types)
   {
     auto codeForType = CodeForType(type, i == 0);
     code.insert(code.end(), codeForType.begin(), codeForType.end());
@@ -71,7 +71,7 @@ void OutputString(const std::vector<TypeInfo>& types, const char* filename,
 
   writer.WriteMainStart();
 
-  for (auto line : CodeForTypes(types))
+  for (const auto& line : CodeForTypes(types))
     writer.WriteLineIndented(line);
 
   writer.WriteMainEnd();
@@ -97,7 +97,7 @@ std::string EmitFieldArrayEntry(const std::string& typeName,
                                 const FieldInfo& field)
 {
   std::stringstream out;
-  out << "{\"" << field.name << "\", \"" << field.type << "\", offsetof("
+  out << R"({")" << field.name << R"(", ")" << field.type << R"(", offsetof()"
       << typeName << ", " << field.name << "), sizeof(" << field.type << ")},";
   return out.str();
 }
@@ -118,8 +118,8 @@ std::string EmitFieldInformationStruct()
 std::string EmitTypeNameAndSize(const TypeInfo& typeInfo)
 {
   std::stringstream out;
-  out << "printf(\"" << typeInfo.name << " (%zub):\\n\", sizeof(" << typeInfo.name
-      << "));";
+  out << R"(printf(")" << typeInfo.name << R"( (%zub):\n", sizeof()"
+      << typeInfo.name << "));";
   return out.str();
 }
 
@@ -141,30 +141,29 @@ std::string EmitForLoopEnd() { return "}"; }
 std::string EmitHeaderRow(const ColumnWidths& widths)
 {
   std::stringstream out;
-  out << "printf(\"%" << widths.name << "s | %" << widths.type << "s | %"
+  out << R"(printf("%)" << widths.name << "s | %" << widths.type << "s | %"
       << widths.offset << "s | %" << widths.size << "s | %" << widths.padding
-      << "s\\n\", \"Field\", \"Type\", "
-         "\"Offset\", \"Size\", \"Padding\");";
+      << R"(s\n", "Field", "Type", "Offset", "Size", "Padding");)";
   return out.str();
 }
 
 std::string EmitFieldOutput(const ColumnWidths& widths)
 {
   std::stringstream out;
-  out << "printf(\"%" << widths.name << "s | %" << widths.type << "s | %"
+  out << R"(printf("%)" << widths.name << "s | %" << widths.type << "s | %"
       << widths.offset << "zu | %" << widths.size << "zu | %" << widths.padding
-      << "zu\\n\", "
+      << R"(zu\n", )"
       << "field->name, field->type, field->offset, field->size, padding);";
   return out.str();
 }
 
-std::string EmitEmptyLine() { return "printf(\"\\n\");"; }
+std::string EmitEmptyLine() { return R"(printf("\n");)"; }
 
-std::string EmitNoFieldsLine() { return "printf(\"No fields\\n\");"; }
+std::string EmitNoFieldsLine() { return R"(printf("No fields\n");)"; }
 
 ColumnWidths ComputeColumnWidths(const std::vector<FieldInfo>& fields)
 {
-  ColumnWidths widths;
+  ColumnWidths widths{};
   widths.type = FindLongestFieldTypeName(fields);
   widths.name = FindLongestFieldName(fields);
   widths.size = FindLongestFieldSize(fields);

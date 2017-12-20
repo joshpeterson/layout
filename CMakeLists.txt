@@ -19,7 +19,7 @@ set(CMAKE_EXE_LINKER_FLAGS ${LLVM_LD_FLAGS_STRING})
 
 set(CXX_STANDARD_REQUIRED ON)
 
-set(CPP_FLAGS -std=c++14 -fno-rtti)
+set(CPP_FLAGS -std=c++17 -fno-rtti)
 set(CMAKE_CXX_FLAGS_DEBUG "-g -DDEBUG -DENABLE_FAKING")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -42,9 +42,7 @@ target_link_libraries(layout layoutlib ${CLANG_LIBS})
 file(GLOB LAYOUT_TEST_SOURCES test/*.cpp)
 add_compile_options("-fexceptions")
 add_executable(layout_test ${LAYOUT_TEST_SOURCES})
-if(UNIX AND NOT APPLE)
-  set(TEST_ADDITIONAL_LIBRARIES stdc++fs)
-endif()
+set(TEST_ADDITIONAL_LIBRARIES stdc++fs)
 target_link_libraries(layout_test layoutlib ${CLANG_LIBS}
   ${TEST_ADDITIONAL_LIBRARIES})
 

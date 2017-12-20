@@ -177,7 +177,7 @@ TEST_CASE("Type Inspector")
   {
     const char* source = "struct Test{int* pointer;};\n";
     std::vector<std::string> arguments;
-    arguments.push_back("-m64");
+    arguments.emplace_back("-m64");
     auto types = Setup(source, arguments, nullptr);
     REQUIRE(types[0].fields[0].size == 8);
   }
@@ -186,7 +186,7 @@ TEST_CASE("Type Inspector")
   {
     const char* source = "struct Test{int* pointer;};\n";
     std::vector<std::string> arguments;
-    arguments.push_back("-m32");
+    arguments.emplace_back("-m32");
     auto types = Setup(source, arguments, nullptr);
     REQUIRE(types[0].fields[0].size == 4);
   }

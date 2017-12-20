@@ -1,6 +1,5 @@
 #include "../include/libclang.hpp"
 #include "../include/clang_string.hpp"
-#include "../include/platform.hpp"
 #include <algorithm>
 #include <vector>
 
@@ -24,6 +23,11 @@ public:
   }
 
   ~DiagnosticSetDisposer() { clang_disposeDiagnosticSet(diagnostics_); }
+
+  DiagnosticSetDisposer(const DiagnosticSetDisposer&) = delete;
+  DiagnosticSetDisposer(const DiagnosticSetDisposer&&) = delete;
+  DiagnosticSetDisposer& operator=(const DiagnosticSetDisposer&) = delete;
+  DiagnosticSetDisposer& operator=(const DiagnosticSetDisposer&&) = delete;
 
 private:
   const CXDiagnosticSet& diagnostics_;
@@ -50,7 +54,7 @@ CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
 {
   CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments, error))
   std::vector<const char*> allArguments;
-  allArguments.push_back(SystemIncludeDirectoryArgument);
+  allArguments.push_back("-I/usr/lib/llvm-5.0/lib/clang/5.0.1/include");
   std::transform(arguments.begin(), arguments.end(),
                  std::back_inserter(allArguments),
                  [](const std::string& s) { return s.c_str(); });
