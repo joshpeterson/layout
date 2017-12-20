@@ -3,6 +3,12 @@
 #include <string>
 #include <vector>
 
-std::vector<TypeInfo> GatherTypes(const char* filename,
-                                  const std::vector<std::string>& arguments,
-                                  bool* error, bool displayDiagnostics = true);
+struct TypesResult
+{
+  std::vector<TypeInfo> types;
+  bool error;
+};
+
+TypesResult GatherTypes(const char* filename,
+                        const std::vector<std::string>& arguments,
+                        bool displayDiagnostics = true);

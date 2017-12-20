@@ -68,16 +68,14 @@ CXChildVisitResult TypeVisitor(CXCursor cursor, CXCursor /* parent */,
   return CXChildVisit_Continue;
 }
 
-std::vector<TypeInfo> GatherTypes(const char* filename,
-                                  const std::vector<std::string>& arguments,
-                                  bool* error, bool displayDiagnostics)
+TypesResult GatherTypes(const char* filename,
+                        const std::vector<std::string>& arguments,
+                        bool displayDiagnostics)
 {
   TranslationUnit tu(filename, arguments, displayDiagnostics);
 
   std::vector<TypeInfo> types;
-  if (error != nullptr)
-    *error = tu.HasError();
   clang_visitChildren(clang_getTranslationUnitCursor(tu.GetCXTranslationUnit()),
                       TypeVisitor, &types);
-  return types;
+  return {types, tu.HasError()};
 }

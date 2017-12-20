@@ -6,8 +6,7 @@
 int ComputeLayout(const char* filename, const std::vector<std::string>& arguments,
                   std::ostream& out)
 {
-  bool error = false;
-  auto types = GatherTypes(filename, arguments, &error);
+  auto[types, error] = GatherTypes(filename, arguments);
 
   OutputString(types, filename, out);
 
