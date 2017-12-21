@@ -5,10 +5,16 @@
 #include <string>
 #include <vector>
 
+struct ParseResult
+{
+  CXTranslationUnit tu;
+  bool error;
+};
+
 FAKEABLE(CXIndex, CreateIndex, (bool displayDiagnostics))
-FAKEABLE(CXTranslationUnit, ParseTranslationUnit,
+FAKEABLE(ParseResult, ParseTranslationUnit,
          (CXIndex index, const char* fileName,
-          const std::vector<std::string>& arguments, bool* error))
+          const std::vector<std::string>& arguments))
 FAKEABLE(void, DisposeTranslationUnit, (CXTranslationUnit translationUnit))
 FAKEABLE(void, DisposeIndex, (CXIndex index))
 

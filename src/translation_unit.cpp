@@ -6,7 +6,10 @@ TranslationUnit::TranslationUnit(const char* fileName,
 {
   hasError_ = false;
   index_ = CreateIndex(displayDiagnostics);
-  translationUnit_ = ParseTranslationUnit(index_, fileName, arguments, &hasError_);
+  auto[translationUnit, hasError] =
+      ParseTranslationUnit(index_, fileName, arguments);
+  translationUnit_ = translationUnit;
+  hasError_ = hasError;
 }
 
 TranslationUnit::~TranslationUnit()

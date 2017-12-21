@@ -17,16 +17,14 @@ CXIndex CreateIndexDouble(bool /*displayDiagnostics*/)
   return expectedIndex;
 }
 
-CXTranslationUnit
-ParseTranslationUnitDouble(CXIndex index, const char* fileName,
-                           const std::vector<std::string>& arguments,
-                           bool* /*error*/)
+ParseResult ParseTranslationUnitDouble(CXIndex index, const char* fileName,
+                                       const std::vector<std::string>& arguments)
 {
   parseTranslationUnitCalled = true;
   indexPassedToParseTranslationUnit = index;
   fileNamePassedToParseTranslationUnit = fileName;
   argumentsPassedToParseTranslationUnit = arguments;
-  return expectedTranslationUnit;
+  return {expectedTranslationUnit, false};
 }
 
 void DisposeTranslationUnitDouble(CXTranslationUnit translationUnit)

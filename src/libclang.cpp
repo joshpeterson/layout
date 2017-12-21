@@ -48,11 +48,10 @@ static bool AnyErrors(const CXTranslationUnit& tu)
   return false;
 }
 
-CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
-                                       const std::vector<std::string>& arguments,
-                                       bool* error)
+ParseResult ParseTranslationUnit(CXIndex index, const char* fileName,
+                                 const std::vector<std::string>& arguments)
 {
-  CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments, error))
+  CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments))
   std::vector<const char*> allArguments;
   allArguments.push_back("-I/usr/lib/llvm-5.0/lib/clang/5.0.1/include");
   std::transform(arguments.begin(), arguments.end(),
@@ -61,8 +60,7 @@ CXTranslationUnit ParseTranslationUnit(CXIndex index, const char* fileName,
   auto tu = clang_parseTranslationUnit(index, fileName, allArguments.data(),
                                        allArguments.size(), nullptr, 0,
                                        CXTranslationUnit_None);
-  *error = AnyErrors(tu);
-  return tu;
+  return {tu, AnyErrors(tu)};
 }
 
 void DisposeTranslationUnit(CXTranslationUnit translationUnit)

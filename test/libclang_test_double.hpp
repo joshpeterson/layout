@@ -9,8 +9,7 @@ const CXTranslationUnit expectedTranslationUnit =
     reinterpret_cast<CXTranslationUnit>(1);
 
 CXIndex CreateIndexDouble(bool displayDiagnostics);
-CXTranslationUnit
-ParseTranslationUnitDouble(CXIndex index, const char* fileName,
-                           const std::vector<std::string>& arguments, bool* error);
+ParseResult ParseTranslationUnitDouble(CXIndex index, const char* fileName,
+                                       const std::vector<std::string>& arguments);
 void DisposeTranslationUnitDouble(CXTranslationUnit translationUnit);
 void DisposeIndexDouble(CXIndex index);
