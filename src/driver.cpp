@@ -3,8 +3,8 @@
 #include "../include/type_inspector.hpp"
 #include <iostream>
 
-int ComputeLayout(const char* filename, const std::vector<std::string>& arguments,
-                  std::ostream& out)
+int ComputeLayout(const char* filename,
+                  const std::vector<std::string>& arguments, std::ostream& out)
 {
   auto[types, error] = GatherTypes(filename, arguments);
 
@@ -12,9 +12,10 @@ int ComputeLayout(const char* filename, const std::vector<std::string>& argument
 
   if (error)
   {
-    std::cerr << "We were not able to completely parse the input code. Please "
-                 "treat the output with caution. It is a best guess, but it might "
-                 "not work as you expect.\n";
+    std::cerr
+        << "We were not able to completely parse the input code. Please "
+           "treat the output with caution. It is a best guess, but it might "
+           "not work as you expect.\n";
     return 1;
   }
 

@@ -17,14 +17,16 @@ TEST_CASE("Driver")
   {
     for (auto& file : fs::directory_iterator("../../test/end-to-end"))
     {
-      if (fs::is_regular_file(file.status()) && file.path().extension() == ".hpp")
+      if (fs::is_regular_file(file.status()) &&
+          file.path().extension() == ".hpp")
       {
         auto expectedPath = file.path();
         expectedPath.replace_extension();
         expectedPath.replace_filename(expectedPath.filename().string() +
                                       "_expected.txt");
         if (!fs::exists(expectedPath))
-          REQUIRE("This file should exist but does not:" == expectedPath.string());
+          REQUIRE("This file should exist but does not:" ==
+                  expectedPath.string());
 
         auto input = LoadFile(file.path().c_str());
         auto expected = LoadFile(expectedPath.c_str());

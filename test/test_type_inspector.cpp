@@ -5,7 +5,8 @@
 #include <vector>
 
 TypesResult Setup(const char* source);
-TypesResult Setup(const char* source, const std::vector<std::string>& arguments);
+TypesResult Setup(const char* source,
+                  const std::vector<std::string>& arguments);
 
 TEST_CASE("Type Inspector")
 {

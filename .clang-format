@@ -3,5 +3,5 @@ IndentWidth: 2
 BreakBeforeBraces: Allman
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: false
-ColumnLimit: 83
+ColumnLimit: 80
 PointerAlignment: Left

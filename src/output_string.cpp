@@ -5,7 +5,8 @@
 #include <sstream>
 #include <string>
 
-static std::vector<std::string> CodeForType(const TypeInfo& type, bool firstType)
+static std::vector<std::string> CodeForType(const TypeInfo& type,
+                                            bool firstType)
 {
   std::vector<std::string> code;
   auto numberOfFields = type.fields.size();
@@ -175,14 +176,14 @@ ColumnWidths ComputeColumnWidths(const std::vector<FieldInfo>& fields)
 
 size_t FindLongestFieldTypeName(const std::vector<FieldInfo>& fields)
 {
-  return FindLongestFieldEntryName(fields, [](auto field) { return field.type; },
-                                   std::strlen("Type"));
+  return FindLongestFieldEntryName(
+      fields, [](auto field) { return field.type; }, std::strlen("Type"));
 }
 
 size_t FindLongestFieldName(const std::vector<FieldInfo>& fields)
 {
-  return FindLongestFieldEntryName(fields, [](auto field) { return field.name; },
-                                   std::strlen("Name") + 1);
+  return FindLongestFieldEntryName(
+      fields, [](auto field) { return field.name; }, std::strlen("Name") + 1);
 }
 
 size_t FindLongestFieldSize(const std::vector<FieldInfo>& fields)
