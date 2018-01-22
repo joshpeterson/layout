@@ -25,7 +25,9 @@ static bool contains(const std::vector<TypeInfo>& types, unsigned hash)
 CXChildVisitResult FieldVisitor(CXCursor cursor, CXCursor /* parent */,
                                 CXClientData clientData)
 {
-  if (clang_getCursorKind(cursor) == CXCursor_FieldDecl)
+  auto typeInfo = reinterpret_cast<TypeInfo*>(clientData);
+  auto cursorKind = clang_getCursorKind(cursor);
+  if (cursorKind == CXCursor_FieldDecl)
   {
     auto type = clang_getCursorType(cursor);
     auto size = clang_Type_getSizeOf(type);
@@ -33,8 +35,11 @@ CXChildVisitResult FieldVisitor(CXCursor cursor, CXCursor /* parent */,
     FieldInfo fieldInfo{GetTypeSpelling(type), GetCursorSpelling(cursor), size,
                         offset};
 
-    auto typeInfo = reinterpret_cast<TypeInfo*>(clientData);
     typeInfo->fields.push_back(fieldInfo);
+  }
+  else if (cursorKind == CXCursor_UnionDecl)
+  {
+    clang_visitChildren(cursor, FieldVisitor, typeInfo);
   }
 
   return CXChildVisit_Continue;

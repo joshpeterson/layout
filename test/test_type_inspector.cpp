@@ -204,6 +204,63 @@ TEST_CASE("Type Inspector")
     auto error = Setup(source).error;
     REQUIRE(error);
   }
+
+  SECTION("Can parse the number of a fields in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields.size() == 2);
+  }
+
+  SECTION("Can parse the name of the first field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].name == "value1");
+  }
+
+  SECTION("Can parse the size of the first field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].size == 4);
+  }
+
+  SECTION("Can parse the offset of the first field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].offset == 0);
+  }
+
+  SECTION("Can parse the name of the second field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].name == "value2");
+  }
+
+  SECTION("Can parse the size of the second field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].size == 4);
+  }
+
+  SECTION("Can parse the offset of the second field in a union")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].offset == 0);
+  }
+
+  SECTION("Can parse the number of a fields in a type with two unions")
+  {
+    const char* source = "struct Test{union {int value1; int value2;};union "
+                         "{int value3; int value4;};};\n";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields.size() == 4);
+  }
 }
 
 TypesResult Setup(const char* source)
