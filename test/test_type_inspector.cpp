@@ -261,6 +261,88 @@ TEST_CASE("Type Inspector")
     auto types = Setup(source).types;
     REQUIRE(types[0].fields.size() == 4);
   }
+
+  SECTION("Can parse the size of a type with nested anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].size == 16);
+  }
+
+  SECTION(
+      "Can parse the number of fields in a type with nested anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields.size() == 2);
+  }
+
+  SECTION("Can parse the name of the first field in a type with nested "
+          "anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].name == "field1");
+  }
+
+  SECTION("Can parse the size of the first field in a type with nested "
+          "anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].size == 4);
+  }
+
+  SECTION("Can parse the offset of the first field in a type with nested "
+          "anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[0].offset == 0);
+  }
+
+  SECTION("Can parse the name of the second field in a type with nested "
+          "anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].name == "field2");
+  }
+
+  SECTION("Can parse the size of the second field in a type with nested "
+          "anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].size == 8);
+  }
+
+  SECTION("Can parse the offset of the second field in a type with nested "
+          "anonymous types")
+  {
+    // The offset of field in anonymous types is not computed correctly.
+    // clang ends up giving us the offset in the anonymous type, not the offset
+    // in the parent type.
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types[0].fields[1].offset == 0);
+  }
+
+  SECTION("Skips parsing of anonymous types")
+  {
+    const char* source =
+        "struct Test{struct{int field1;}; struct{double field2;};};";
+    auto types = Setup(source).types;
+    REQUIRE(types.size() == 1);
+  }
 }
 
 TypesResult Setup(const char* source)

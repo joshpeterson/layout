@@ -37,7 +37,8 @@ CXChildVisitResult FieldVisitor(CXCursor cursor, CXCursor /* parent */,
 
     typeInfo->fields.push_back(fieldInfo);
   }
-  else if (cursorKind == CXCursor_UnionDecl)
+  else if (cursorKind == CXCursor_UnionDecl ||
+           cursorKind == CXCursor_StructDecl)
   {
     clang_visitChildren(cursor, FieldVisitor, typeInfo);
   }
@@ -56,7 +57,7 @@ CXChildVisitResult TypeVisitor(CXCursor cursor, CXCursor /* parent */,
   {
     auto types = reinterpret_cast<std::vector<TypeInfo>*>(clientData);
     auto hash = clang_hashCursor(cursor);
-    if (!contains(*types, hash))
+    if (!contains(*types, hash) && !clang_Cursor_isAnonymous(cursor))
     {
       auto type = clang_getCursorType(cursor);
       auto size = clang_Type_getSizeOf(type);
