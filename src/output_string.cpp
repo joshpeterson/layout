@@ -131,9 +131,10 @@ std::string EmitForLoopStart(const std::string& typeName)
   out << "  {\n";
   out << "    FieldInfo* field = &" << typeName << "_fields[i];\n"
       << "    size_t padding = i < " << typeName << "_fieldCount - 1 ? "
-      << typeName
-      << "_fields[i + 1].offset - field->offset - field->size : sizeof("
-      << typeName << ") - field->offset - field->size;\n";
+      << typeName << "_fields[i + 1].offset != 0 ? " << typeName
+      << "_fields[i + 1].offset"
+      << " - field->offset - field->size : 0 : sizeof(" << typeName
+      << ") - field->offset - field->size;\n";
   return out.str();
 }
 

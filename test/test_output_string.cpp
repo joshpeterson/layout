@@ -88,14 +88,15 @@ TEST_CASE("Output String")
 
   SECTION("Can emit for loop start")
   {
-    REQUIRE(
-        EmitForLoopStart("TestType") ==
-        "for (int i = 0; i < TestType_fieldCount; i++)\n"
-        "  {\n"
-        "    FieldInfo* field = &TestType_fields[i];\n"
-        "    size_t padding = i < TestType_fieldCount - 1 "
-        "? TestType_fields[i + 1].offset - field->offset "
-        "- field->size : sizeof(TestType) - field->offset - field->size;\n");
+    REQUIRE(EmitForLoopStart("TestType") ==
+            "for (int i = 0; i < TestType_fieldCount; i++)\n"
+            "  {\n"
+            "    FieldInfo* field = &TestType_fields[i];\n"
+            "    size_t padding = i < TestType_fieldCount - 1 "
+            "? TestType_fields[i + 1].offset != 0 ? TestType_fields[i + "
+            "1].offset - field->offset "
+            "- field->size : 0 : sizeof(TestType) - field->offset - "
+            "field->size;\n");
   }
 
   SECTION("Can emit for loop end") { REQUIRE(EmitForLoopEnd() == "}"); }

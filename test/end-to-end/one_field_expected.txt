@@ -25,7 +25,7 @@ int main(int /*argc*/, const char** /*argv*/)
   for (int i = 0; i < Test_fieldCount; i++)
   {
     FieldInfo* field = &Test_fields[i];
-    size_t padding = i < Test_fieldCount - 1 ? Test_fields[i + 1].offset - field->offset - field->size : sizeof(Test) - field->offset - field->size;
+    size_t padding = i < Test_fieldCount - 1 ? Test_fields[i + 1].offset != 0 ? Test_fields[i + 1].offset - field->offset - field->size : 0 : sizeof(Test) - field->offset - field->size;
 
     printf("%5s | %4s | %6zu | %4zu | %7zu\n", field->name, field->type, field->offset, field->size, padding);
   }
