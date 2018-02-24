@@ -343,6 +343,13 @@ TEST_CASE("Type Inspector")
     auto types = Setup(source).types;
     REQUIRE(types.size() == 1);
   }
+
+  SECTION("Skips parsing of anonymous type with int32_t field")
+  {
+    const char* source = "struct Test{union{struct{int32_t field1;};};};";
+    auto types = Setup(source).types;
+    REQUIRE(types.size() == 1);
+  }
 }
 
 TypesResult Setup(const char* source)

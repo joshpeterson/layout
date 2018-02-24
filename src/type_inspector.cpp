@@ -22,6 +22,20 @@ static bool contains(const std::vector<TypeInfo>& types, unsigned hash)
   return it != types.end();
 }
 
+static bool IsAnonymousType(CXCursor cursor)
+{
+  if (clang_Cursor_isAnonymous(cursor))
+    return true;
+
+  // For a reason I don't understand, clang_Cursor_isAnonymous returns false
+  // when an anonymous type has an int32_t field. Add another check for the name
+  // of the type to ensure that we don't process the anonymous type.
+  auto type = clang_getCursorType(cursor);
+  if (GetTypeSpelling(type).find("::(anonymous") != std::string::npos)
+    return true;
+  return false;
+}
+
 CXChildVisitResult FieldVisitor(CXCursor cursor, CXCursor /* parent */,
                                 CXClientData clientData)
 {
@@ -57,7 +71,7 @@ CXChildVisitResult TypeVisitor(CXCursor cursor, CXCursor /* parent */,
   {
     auto types = reinterpret_cast<std::vector<TypeInfo>*>(clientData);
     auto hash = clang_hashCursor(cursor);
-    if (!contains(*types, hash) && !clang_Cursor_isAnonymous(cursor))
+    if (!contains(*types, hash) && !IsAnonymousType(cursor))
     {
       auto type = clang_getCursorType(cursor);
       auto size = clang_Type_getSizeOf(type);
