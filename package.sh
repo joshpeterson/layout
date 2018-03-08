@@ -6,10 +6,10 @@ if [ -d cde-package ]; then
   rm -rf cde-package/
 fi
 ./release.sh
-cde ./layout
+cde ./build/Release/layout
 
-declare -a rdirectories=("/usr/include/c++/6"
-                         "/usr/include/c++/6/backward"
+declare -a rdirectories=("/usr/include/c++/7.2.0"
+                         "/usr/include/c++/7.2.0/backward"
                          "/usr/include/x86_64-linux-gnu")
 for i in "${rdirectories[@]}"
 do
@@ -18,7 +18,7 @@ do
 done
 
 declare -a directories=("/usr/include"
-                        "/usr/lib/llvm-3.8/lib/clang/3.8.0/include")
+                        "/usr/lib/llvm-5.0/lib/clang/5.0.0/include")
 for j in "${directories[@]}"
 do
   cp --parents $j/* cde-package/cde-root
