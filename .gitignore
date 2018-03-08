@@ -10,3 +10,4 @@ layout
 layout_test
 layout.tar.gz
 compile_commands.json
+source_file_for_tests.hh
