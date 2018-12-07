@@ -198,6 +198,13 @@ TEST_CASE("Type Inspector")
     REQUIRE(types.empty());
   }
 
+  SECTION("Finds a type that also has a forward declaration")
+  {
+    const char* source = "struct Test; struct Test{};";
+    auto types = Setup(source).types;
+    REQUIRE(types.size() == 1);
+  }
+
   SECTION("Returns an error if there are any compiler errors")
   {
     const char* source = "struct Test { int i;}";
