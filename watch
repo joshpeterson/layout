@@ -1,0 +1,2 @@
+#!/bin/sh
+ag -l --ignore-dir build | entr ./debug.sh
