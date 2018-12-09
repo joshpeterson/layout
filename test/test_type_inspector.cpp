@@ -122,31 +122,6 @@ TEST_CASE("Type Inspector")
     REQUIRE(types[0].fields[1].offset == 8);
   }
 
-  SECTION("Can parse type using a standard library type")
-  {
-    const char* source = "#include <string>\n"
-                         "struct Test{std::string field;};\n";
-    auto types = Setup(source).types;
-    REQUIRE(types[0].fields[0].name == "field");
-  }
-
-  SECTION("Can parse the size of a field using a standard library type")
-  {
-    const char* source = "#include <string>\n"
-                         "struct Test{std::string field;};\n";
-    auto types = Setup(source).types;
-    REQUIRE(types[0].fields[0].size == sizeof(std::string));
-  }
-
-  SECTION("Can parse the offset of a field using a standard library type")
-  {
-    const char* source = "#include <string>\n"
-                         "struct Test{std::string field;\n"
-                         "int field2;};\n";
-    auto types = Setup(source).types;
-    REQUIRE(types[0].fields[1].offset == sizeof(std::string));
-  }
-
   SECTION("Can parse the size of a field in a bit field")
   {
     const char* source = "struct Test{int a:16; int b:17;};\n";
