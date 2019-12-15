@@ -4,25 +4,23 @@ language: cpp
 matrix:
   include:
     sudo: required
-    dist: trusty
+    dist: bionic
     addons:
       apt:
         sources:
-          - llvm-toolchain-trusty-5.0
-          - ubuntu-toolchain-r-test
+           - sourceline: 'deb https://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+             key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
-          - clang-5.0
-          - g++-7
+          - clang-9
     env:
-      - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+      - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
 
 before_install:
   - eval "${MATRIX_EVAL}"
   - sudo apt-get update -qq
-  - sudo apt-get install -y llvm-5.0-dev libclang-5.0-dev cmake ninja-build
-install:
-  - sudo update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-5.0 90
-  - sudo rm -rf /usr/local/clang-3.5.0
+  - sudo apt-get install -y --allow-unauthenticated llvm-9-dev libclang-9-dev cmake ninja-build
+  - sudo update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-9 90
+  - export PATH=/usr/bin:$PATH # Use llvm-config from /usr/bin instead of the clang 7 one
 
 # Build steps
 script:

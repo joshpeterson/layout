@@ -10,13 +10,13 @@ fi
 
 mkdir layout-package
 cp build/Release/layout layout-package
-cp /usr/lib/llvm-5.0/lib/libclang-5.0.so.1 layout-package
-cp /usr/lib/llvm-5.0/lib/libLLVM-5.0.so.1 layout-package
+cp /usr/lib/llvm-9/lib/libclang-9.so.1 layout-package
+cp /usr/lib/llvm-9/lib/libLLVM-9.so.1 layout-package
 cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 layout-package
 cp /lib/x86_64-linux-gnu/libtinfo.so.5 layout-package
 
-declare -a rdirectories=("/usr/include/c++/7.2.0"
-                         "/usr/include/c++/7.2.0/backward"
+declare -a rdirectories=("/usr/include/c++/7.4.0"
+                         "/usr/include/c++/7.4.0/backward"
                          "/usr/include/x86_64-linux-gnu")
 for i in "${rdirectories[@]}"
 do
@@ -24,7 +24,7 @@ do
 done
 
 declare -a directories=("/usr/include"
-                        "/usr/lib/llvm-5.0/lib/clang/5.0.0/include")
+                        "/usr/lib/llvm-9/lib/clang/9.0.1/include")
 for j in "${directories[@]}"
 do
   # Don't print messages about omitting a directory

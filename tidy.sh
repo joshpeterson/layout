@@ -8,4 +8,4 @@ else
   FILES="$1"
 fi
 echo Checking $FILES
-clang-tidy $FILES -config='' -- -std=c++14 -I/usr/lib/llvm-5.0/include
+clang-tidy $FILES -config='' -- -std=c++14 -I/usr/lib/llvm-9/include
