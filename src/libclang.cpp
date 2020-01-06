@@ -53,7 +53,7 @@ ParseResult ParseTranslationUnit(CXIndex index, const char* fileName,
 {
   CALL_FAKE(ParseTranslationUnit, (index, fileName, arguments))
   std::vector<const char*> allArguments;
-  allArguments.push_back("-I/usr/lib/llvm-5.0/lib/clang/5.0.1/include");
+  allArguments.push_back("-I/usr/lib/llvm-9/lib/clang/9.0.1/include");
   std::transform(arguments.begin(), arguments.end(),
                  std::back_inserter(allArguments),
                  [](const std::string& s) { return s.c_str(); });
